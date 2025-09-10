@@ -76,7 +76,7 @@ cd data
 
 This pipeline:
 1. **Decontaminates** the training data using n-gram overlap detection and path de-duplication.
-2. **Apply's the chat template** to the decontaminated dataset for training
+2. **Applies the chat template** to the decontaminated dataset for training
 
 ### Manual Data Processing
 
@@ -160,7 +160,7 @@ ICD-Bench is a comprehensive medical reasoning benchmark dataset containing **3,
 - `k_hops`: Number of reasoning hops in source path (2-5)
 - `path`: Knowledge graph reasoning path as list of entity-relation-entity triples
 - `category`: ICD disease category
-- `difficulty_levels`: Question difficulty classification
+- `difficulty_levels`: Question difficulty classification from level 1 (easiest) to level 5 (haredest)
 
 
 ### Loading the Dataset
