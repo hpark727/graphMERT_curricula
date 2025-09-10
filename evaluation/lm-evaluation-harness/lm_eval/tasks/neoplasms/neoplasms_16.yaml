@@ -1,0 +1,25 @@
+tag:
+    - icdbench_16
+task: neoplasms_parallel_16
+dataset_path: glitchinthematrix/neoplasms
+dataset_name: default
+dataset_kwargs:
+    cache_dir: /projects/JHA/.cache/huggingface/datasets
+    download_mode: reuse_dataset_if_exists
+output_type: generate_until
+test_split: test
+doc_to_text: !function preprocess_neoplasms.doc_to_text
+doc_to_target: !function preprocess_neoplasms.doc_to_target
+doc_to_choice: ['A','B','C','D']
+repeats: 16
+generation_kwargs:
+    until: []
+    do_sample: false
+    temperature: 1
+    max_gen_toks: 32768
+filter_list:
+  - name: "all" # Will do coverage, majority, and take_first_k
+    filter:
+      - function: "take_first_k"
+        k: 16
+    
