@@ -20,7 +20,7 @@ Official implementation of our paper [Bottom-Up Domain-Specific Superintelligenc
 
 ### Environment Setup
 
-Create and activate the conda environment with all required dependencies:
+Create and activate the conda environment ```bottom_up_SI``` with all required dependencies:
 
 ```bash
 chmod +x env_setup.sh
@@ -125,7 +125,7 @@ torchrun \
     --use_lora
 ```
 
-## ICD-Bench Dataset
+## ICD-Bench Evaluation Dataset
 
 ICD-Bench is a comprehensive medical reasoning benchmark dataset containing **3,675 multi-hop questions** across 15 ICD disease categories. Each question is grounded in medical knowledge graphs and requires multi-step reasoning.
 
