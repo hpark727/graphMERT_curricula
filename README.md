@@ -1,6 +1,6 @@
 # Bottom-Up Domain-Specific Superintelligence
 
-Official implementation of our paper [Bottom-Up Domain-Specific Superintelligence: A Reliable Knowledge Graph is what you need](https://arxiv.org/abs/2507.13966) with code, models, and evaluation benchmarks. Also check-out the [official website](https://kg-bottom-up-superintelligence.github.io/) and [twitter thread](https://x.com/bhish_98/status/1948143421136490839). 
+Official implementation of our paper [Bottom-Up Domain-Specific Superintelligence: A Reliable Knowledge Graph is What We Need](https://arxiv.org/abs/2507.13966) with code, models, and evaluation benchmarks. Also check-out the [official website](https://kg-bottom-up-superintelligence.github.io/) and [twitter thread](https://x.com/bhish_98/status/1948143421136490839). 
 
 ![Model Overview](image.png)
 
@@ -23,8 +23,7 @@ Official implementation of our paper [Bottom-Up Domain-Specific Superintelligenc
 Create and activate the conda environment ```bottom_up_SI``` with all required dependencies:
 
 ```bash
-chmod +x env_setup.sh
-./env_setup.sh
+source ./env_setup.sh
 conda activate bottom_up_SI
 ```
 
@@ -42,7 +41,7 @@ Generate domain-specific training curriculum using knowledge graphs:
 ```bash
 cd curriculum_generator
 export GEMINI_API_KEY="your_gemini_api_key"
-./generate_curriculum.sh
+source ./generate_curriculum.sh
 ```
 
 This creates curriculum questions with multi-hop reasoning paths up to 3 hops, generating 24,000 questions saved to `/curriculum_training_data/curriculum_dataset_hop_3.json`.
@@ -71,7 +70,7 @@ Process the generated curriculum data:
 
 ```bash
 cd data
-./data_prep.sh
+source ./data_prep.sh
 ```
 
 This pipeline:
@@ -119,7 +118,7 @@ torchrun \
     --nproc_per_node=8 \
     trainer.py \
     --model_name=Qwen/QwQ-32B \
-    --train_dataset_path="/curriculum_training_data/tokenized_curriculum_dataset_hop_3_decontaminated/" \
+    --train_dataset_path="/curriculum_training_data\tokenized_curriculum_dataset_hop_3_decontaminated/" \
     --learning_rate=1e-5 \
     --num_train_epochs=8 \
     --use_lora
@@ -182,7 +181,7 @@ Evaluate trained models on the ICD-Bench dataset:
 
 ```bash
 cd evaluation
-./eval.sh
+source ./eval.sh
 ```
 
 This runs evaluation with:
