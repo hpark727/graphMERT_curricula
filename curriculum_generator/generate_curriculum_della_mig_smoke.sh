@@ -34,6 +34,7 @@ export HF_HOME="$HF_CACHE"
 export TRANSFORMERS_CACHE="$HF_CACHE"
 export HF_HUB_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
+export VLLM_USE_FLASHINFER_SAMPLER=0
 
 echo "Job $SLURM_JOB_ID starting on $(hostname) at $(date)"
 echo "Model: $MODEL | GPUs: $TENSOR_PARALLEL | Questions: $NUM_QUESTIONS"
