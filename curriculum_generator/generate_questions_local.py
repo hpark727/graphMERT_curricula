@@ -230,14 +230,20 @@ class LocalLLMBackend:
         return self._generate_batch(prompts)
 
     def separate_question_and_answer(self, question: str) -> Tuple[str, str]:
-        question_extracted = question.split('<Answer>')[0]
-        answer = question.split('<Answer>')[1].split('</Answer>')[0].strip()
-        answer = answer.strip('* ').strip()
-        return question_extracted, answer
+        match = re.search(r'<[Aa]nswer>', question)
+        if not match:
+            raise ValueError("No <Answer> tag found")
+        question_extracted = question[:match.start()]
+        rest = question[match.start():]
+        answer_match = re.search(r'<[Aa]nswer>\s*\*?\s*([A-D])', rest)
+        if not answer_match:
+            raise ValueError("Could not extract answer letter")
+        return question_extracted, answer_match.group(1)
 
     def quality_filtering(self, question: str) -> bool:
-        required_tags = ['<Question>', '</Question>', '<Options>', '</Options>']
-        if not all(tag in question for tag in required_tags):
+        q_lower = question.lower()
+        required_tags = ['<question>', '</question>', '<options>', '</options>']
+        if not all(tag in q_lower for tag in required_tags):
             return False
         if not all(opt in question for opt in ['A.', 'B.', 'C.', 'D.']):
             return False
@@ -291,7 +297,7 @@ class LocalLLMBackend:
 
 
 def _shuffle_answer_options(question_text: str, correct_answer: str) -> Tuple[str, str]:
-    options_match = re.search(r'(<Options>)(.*?)(</Options>)', question_text, re.DOTALL)
+    options_match = re.search(r'(<[Oo]ptions>)(.*?)(</[Oo]ptions>)', question_text, re.DOTALL | re.IGNORECASE)
     if not options_match:
         return question_text, correct_answer
     options_content = options_match.group(2)
