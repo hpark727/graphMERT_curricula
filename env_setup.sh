@@ -19,7 +19,7 @@ conda install pytorch=2.5.1 torchvision=0.20.1 torchaudio=2.5.1 pytorch-cuda=12.
 
 # Install core ML packages
 echo "Installing core ML packages..."
-pip install transformers \
+pip install "transformers>=4.50.0" \
             datasets==4.0.0 \
             tokenizers \
             accelerate==1.9.0 \

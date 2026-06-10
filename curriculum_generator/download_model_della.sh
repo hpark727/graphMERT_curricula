@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=hf_download
-#SBATCH --output=/scratch/gpfs/%u/logs/hf_download_%j.out
-#SBATCH --error=/scratch/gpfs/%u/logs/hf_download_%j.err
+#SBATCH --output=/scratch/gpfs/JHA/hp9084/curricula_gen/logs/hf_download_%j.out
+#SBATCH --error=/scratch/gpfs/JHA/hp9084/curricula_gen/logs/hf_download_%j.err
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
@@ -11,11 +11,11 @@
 
 # ---- user config --------------------------------------------------------
 MODEL="google/gemma-3-27b-it"
-HF_CACHE="/scratch/gpfs/$USER/.cache/huggingface"
+HF_CACHE="/scratch/gpfs/JHA/hp9084/curricula_gen/.cache/huggingface"
 HF_TOKEN=""   # paste your HuggingFace token (required for gated models)
 # -------------------------------------------------------------------------
 
-mkdir -p "$HF_CACHE" /scratch/gpfs/$USER/logs
+mkdir -p "$HF_CACHE" "/scratch/gpfs/JHA/hp9084/curricula_gen/logs"
 
 module purge
 module load anaconda3/2024.2

@@ -1,28 +1,27 @@
 #!/bin/bash
-#SBATCH --job-name=curriculum_gen
-#SBATCH --output=/scratch/gpfs/JHA/hp9084/curricula_gen/logs/curriculum_gen_%j.out
-#SBATCH --error=/scratch/gpfs/JHA/hp9084/curricula_gen/logs/curriculum_gen_%j.err
+#SBATCH --job-name=curriculum_smoke
+#SBATCH --output=/scratch/gpfs/JHA/hp9084/curricula_gen/logs/smoke_%j.out
+#SBATCH --error=/scratch/gpfs/JHA/hp9084/curricula_gen/logs/smoke_%j.err
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8             # 80GB nodes have 12 CPU cores per GPU; 8 is safe for 2 GPUs
-#SBATCH --gres=gpu:2                  # Gemma 3 27B needs ~27GB/GPU in bf16 + KV cache → 80GB nodes
-#SBATCH --constraint=gpu80            # 80GB A100s (Intel CPUs); all 80GB nodes are Intel so no extra constraint needed
-#SBATCH --mem=64G
-#SBATCH --time=24:00:00
-#SBATCH --partition=gpu
+#SBATCH --cpus-per-task=1
+#SBATCH --gres=gpu:1
+#SBATCH --mem=32G
+#SBATCH --time=1:00:00
+#SBATCH --partition=mig
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH --mail-user=                  # fill in your princeton email
+#SBATCH --mail-user=hp9084@princeton.edu
 
 # ---- user config --------------------------------------------------------
-MODEL="google/gemma-3-27b-it"                # any HF model ID
-TENSOR_PARALLEL=2                            # must match --gres=gpu:N above
-NUM_QUESTIONS=24000
-MAX_K_HOPS=3
-BATCH_SIZE=16
+MODEL="google/gemma-4-E4B-it"    # fits in 10GB MIG; swap for 27b-it on 80GB nodes
+TENSOR_PARALLEL=1                # MIG = single GPU only
+NUM_QUESTIONS=10
+MAX_K_HOPS=2
+BATCH_SIZE=4
 DOMAIN="computer networking"
 
 REPO_DIR="/scratch/gpfs/JHA/hp9084/curricula_gen"
-OUTPUT_DIR="/scratch/gpfs/JHA/hp9084/curricula_gen/output"
+OUTPUT_DIR="/scratch/gpfs/JHA/hp9084/curricula_gen/smoke_output"
 HF_CACHE="/scratch/gpfs/JHA/hp9084/curricula_gen/.cache/huggingface"
 # -------------------------------------------------------------------------
 
@@ -48,4 +47,4 @@ python "$REPO_DIR/curriculum_generator/generate_curriculum_local.py" \
     --output_dir "$OUTPUT_DIR" \
     --hf_cache_dir "$HF_CACHE"
 
-echo "Job finished at $(date)"
+echo "Smoke test finished at $(date)"
