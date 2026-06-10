@@ -6,7 +6,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8             # 80GB nodes have 12 CPU cores per GPU; 8 is safe for 2 GPUs
 #SBATCH --gres=gpu:2                  # Gemma 3 27B needs ~27GB/GPU in bf16 + KV cache → 80GB nodes
-#SBATCH --constraint=gpu80
+#SBATCH --constraint=gpu40
 #SBATCH --mem=64G
 #SBATCH --time=24:00:00
 #SBATCH --mail-type=BEGIN,END,FAIL
