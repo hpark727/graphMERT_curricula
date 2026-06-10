@@ -4,11 +4,10 @@
 #SBATCH --error=/scratch/gpfs/JHA/hp9084/curricula_gen/logs/smoke_%j.err
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=1
+#SBATCH --cpus-per-task=6
 #SBATCH --gres=gpu:1
-#SBATCH --mem=32G
+#SBATCH --mem=120G
 #SBATCH --time=1:00:00
-#SBATCH --partition=mig
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --mail-user=hp9084@princeton.edu
 
