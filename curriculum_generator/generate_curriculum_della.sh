@@ -15,9 +15,9 @@
 # ---- user config --------------------------------------------------------
 MODEL="google/gemma-3-27b-it"                # any HF model ID
 TENSOR_PARALLEL=2                            # must match --gres=gpu:N above
-NUM_QUESTIONS=24000
+NUM_QUESTIONS=20000
 MAX_K_HOPS=3
-BATCH_SIZE=16
+BATCH_SIZE=32
 DOMAIN="computer networking"
 
 REPO_DIR="/scratch/gpfs/JHA/hp9084/curricula_gen"

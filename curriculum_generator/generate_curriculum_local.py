@@ -24,7 +24,7 @@ def generate_curriculum_local(
     tensor_parallel_size: int = 1,
     domain: str = 'computer networking',
     hf_cache_dir: str = None,
-    batch_size: int = 8,
+    batch_size: int = 32,
     error_threshold: int = 10,
 ) -> None:
 
@@ -58,8 +58,9 @@ def generate_curriculum_local(
             pbar.close()
             raise RuntimeError("Too many consecutive errors. Stopping.")
 
-        # --- batch path: sample a batch of candidates, filter in one pass ---
         k_hops = random.randint(1, max_k_hops)
+
+        # --- Step 1: batch question generation ---
         try:
             candidates = qa_gym.generate_questions_batch(
                 k_hops=k_hops, batch_size=batch_size
@@ -67,62 +68,92 @@ def generate_curriculum_local(
         except Exception as e:
             error_window += 1
             errors_total += 1
-            pbar.write(f"[skip] batch path generation failed: {e}")
+            pbar.write(f"[skip] batch generation failed: {e}")
             continue
 
-        for question_data in candidates:
-            if question_idx >= num_questions:
+        # --- Step 2: quality filter (structural, no LLM call) ---
+        quality_passed = []
+        for q in candidates:
+            if question_idx + len(quality_passed) >= num_questions:
                 break
-
             try:
-                quality = qa_gym.quality_filtering(question_data['question'])
-                if not quality:
-                    raise ValueError("Quality filtering failed.")
-
-                explanation = qa_gym.generate_thinking_trace(
-                    question=question_data['question'],
-                    paths=question_data['paths'],
-                )
-                combined = qa_gym.combine_question_and_thinking_trace_with_answer(
-                    question=question_data['question'],
-                    explanation=explanation,
-                    answer=question_data['answer'],
-                )
-                correctness = qa_gym.correctness_filtering(combined, question_data['paths'])
-                if correctness != "Yes":
-                    raise ValueError(f"Correctness filtering failed ({correctness}).")
-
-                dataset.append({
-                    "id": question_idx,
-                    "k_hops": k_hops,
-                    "source_concept": question_data['source_concept'],
-                    "target_concept": question_data['target_concept'],
-                    "paths": question_data['paths'],
-                    "question_and_explanation": combined,
-                })
-
-                for path in question_data['paths']:
-                    qa_gym.generator.vocab_freq[path['start']] += 1
-
-                question_idx += 1
-                error_window = 0
-
-                pbar.update(1)
-                pbar.set_postfix(errors=errors_total, hops=k_hops,
-                                 src=question_data['source_concept'][:20])
-
-                if question_idx % 50 == 0:
-                    with open(output_file, 'w') as f:
-                        json.dump(dataset, f, indent=2)
-                    with open(os.path.join(output_dir, "nodes_freq.json"), 'w') as f:
-                        json.dump(qa_gym.generator.vocab_freq, f, indent=2)
-                    pbar.write(f"[checkpoint] {question_idx} questions saved.")
-
+                if qa_gym.quality_filtering(q['question']):
+                    quality_passed.append(q)
+                else:
+                    error_window += 1
+                    errors_total += 1
+                    pbar.write("[skip] Quality filtering failed.")
             except Exception as e:
                 error_window += 1
                 errors_total += 1
-                pbar.set_postfix(errors=errors_total)
-                pbar.write(f"[skip] {e}")
+
+        if not quality_passed:
+            continue
+
+        # --- Step 3: batch thinking trace generation ---
+        try:
+            explanations = qa_gym.llm.generate_thinking_traces_batch(
+                [{'question': q['question'], 'paths': q['paths']} for q in quality_passed]
+            )
+        except Exception as e:
+            error_window += 1
+            errors_total += 1
+            pbar.write(f"[skip] thinking trace batch failed: {e}")
+            continue
+
+        # --- Step 4: batch correctness filtering ---
+        combined_list = []
+        for q, exp in zip(quality_passed, explanations):
+            combined = qa_gym.combine_question_and_thinking_trace_with_answer(
+                question=q['question'], explanation=exp, answer=q['answer']
+            )
+            q['_combined'] = combined
+
+        try:
+            correctness_results = qa_gym.llm.correctness_filtering_batch(
+                [{'combined': q['_combined'], 'paths': q['paths']} for q in quality_passed]
+            )
+        except Exception as e:
+            error_window += 1
+            errors_total += 1
+            pbar.write(f"[skip] correctness batch failed: {e}")
+            continue
+
+        # --- Step 5: collect passing questions ---
+        for q, correctness in zip(quality_passed, correctness_results):
+            if question_idx >= num_questions:
+                break
+            if correctness != "Yes":
+                error_window += 1
+                errors_total += 1
+                pbar.write(f"[skip] Correctness filtering failed ({correctness}).")
+                continue
+
+            dataset.append({
+                "id": question_idx,
+                "k_hops": k_hops,
+                "source_concept": q['source_concept'],
+                "target_concept": q['target_concept'],
+                "paths": q['paths'],
+                "question_and_explanation": q['_combined'],
+            })
+
+            for path in q['paths']:
+                qa_gym.generator.vocab_freq[path['start']] += 1
+
+            question_idx += 1
+            error_window = 0
+
+            pbar.update(1)
+            pbar.set_postfix(errors=errors_total, hops=k_hops,
+                             src=q['source_concept'][:20])
+
+            if question_idx % 50 == 0:
+                with open(output_file, 'w') as f:
+                    json.dump(dataset, f, indent=2)
+                with open(os.path.join(output_dir, "nodes_freq.json"), 'w') as f:
+                    json.dump(qa_gym.generator.vocab_freq, f, indent=2)
+                pbar.write(f"[checkpoint] {question_idx} questions saved.")
 
     pbar.close()
 
@@ -134,16 +165,13 @@ def generate_curriculum_local(
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--max_k_hops", type=int, default=3)
-    parser.add_argument("--num_questions", type=int, default=24000)
+    parser.add_argument("--num_questions", type=int, default=20000)
     parser.add_argument("--output_dir", type=str, default="/scratch/gpfs/$USER/curriculum_training_data/")
     parser.add_argument("--model_name", type=str, default="google/gemma-3-27b-it")
-    parser.add_argument("--tensor_parallel_size", type=int, default=2,
-                        help="Number of GPUs to shard the model across (vLLM tensor parallelism)")
+    parser.add_argument("--tensor_parallel_size", type=int, default=2)
     parser.add_argument("--domain", type=str, default="computer networking")
-    parser.add_argument("--hf_cache_dir", type=str, default=None,
-                        help="Override HuggingFace cache dir (e.g. /scratch/gpfs/$USER/.cache/huggingface)")
-    parser.add_argument("--batch_size", type=int, default=8,
-                        help="Number of questions to generate per vLLM batch call")
+    parser.add_argument("--hf_cache_dir", type=str, default=None)
+    parser.add_argument("--batch_size", type=int, default=32)
     args = parser.parse_args()
 
     os.makedirs(args.output_dir, exist_ok=True)
