@@ -1,64 +1,105 @@
+2 channel
+802
+802 11
+802 channel
+802 link
 802 protocol
 802 transmission
+802 wireless
+a address
 a broadcast
+a congestion packet
+a connection
+a device
 a file
 a frame
+a gateway
 a gateway to other host
 a host
 a mail
+a mail message
 a message
+a message for the server
 a message to server
+a mobile device
 a network
 a node
 a packet
 a packet switch
 a process
+a program
+a protocol
 a query
+a query to the server
 a request
+a request to server
 a route
 a segment
+a segment and segments
 a segment from the connection
 a segment of data
 a segment with a header
 a sequence of bit
 a signal
 a web page
+a window
 a window of the connection
+a wireless station
 access
+access and internet
 access ap
+access channel
 access control
+access data
 access gateway
 access isp
+access layer
 access link
 access network
 access point
 access protocol
+access route
 access router
 access to data
 ack
 acknowledgment
+adapt address
 adapter
 additive increase
 address
+address 1
 address 2
 address 3
+address bit
 address configuration
+address control
 address data
+address distribution
 address entry
 address field
+address frame
 address information
+address management
 address number
+address of device
+address of hs
 address of server
+address of the mac
+address of the station
+address policy
 address prefix
+address record
 address response
 address server
 address service
 address table
+address to client
 address to the client
 addresses
 addressing
 addressing field
 addressing policy
+addressing protocol
 addressing service
 aes
 agent
@@ -69,11 +110,14 @@ answer section
 ap
 ap broadcast
 ap data
+ap frame
 ap link
+ap mac
 apache
 application
 application cache
 application control
+application controller
 application data
 application data transfer
 application gateway
@@ -81,6 +125,7 @@ application host
 application interface
 application layer
 application layer protocol
+application layer service
 application message
 application port
 application program
@@ -91,12 +136,16 @@ application routing
 application security
 application server
 application service
+application socket
 application system
 application traffic
+architecture
+architecture layer
 arin
 arp
 arp packet
 arp table
+as rt
 atm network architecture
 authentication key
 authentication server
@@ -105,24 +154,39 @@ authoritative flag
 autonomous system
 average delay
 average file distribution
+average interval
+average rate
 average time
 bandwidth
+bandwidth avoidance
+bandwidth calculation
 bandwidth checks
 bandwidth control
 bandwidth delay
+bandwidth detection
 bandwidth efficiency
 bandwidth loss
 bandwidth management
+bandwidth mode
+bandwidth segment
 bandwidth service
+base
+base network
 base station
+base station data
 base station signal
+base stations
 beacon frame
 bgp
 bit
+bit checks
 bit error correction
+bit field
 bit length
+bit rate
 bit sequence
 bit sequence of data
+bit value
 bits
 bits number
 bits sequence
@@ -132,24 +196,29 @@ block cipher
 bluetooth
 broadcast
 broadcast access
+broadcast address
 broadcast channel
 broadcast communication
 broadcast data
 broadcast ethernet frame
 broadcast frame
+broadcast hub
 broadcast link
 broadcast medium
 broadcast message
 broadcast messages
 broadcast mode
 broadcast protocol
+broadcast radio
 broadcast service
 broadcast signal
+broadcast to the node
 broadcast transmission
 browser
 browser client
 browser data
 browser message
+browser page
 browser request
 browser response
 browser user
@@ -160,38 +229,53 @@ buffer congestion
 buffer control
 buffer delay
 buffer queue
+buffer sequence
 buffer window
 bufferbloat
 buffering
 byte
+byte arithmetic
+byte buffer
 byte sequence
+byte value
 bytes
+bytes buffer
 bytes of data
 cable
 cable and internet infrastructure
 cable and wire
 cable data
+cable head end
 cable infrastructure
 cable internet access
+cable link
 cable network
 cache
+cache data
 cache file
 cache header
 cache object
 cache record
 cache server
+cache service
+cache system
 calculation
 carrier
+carrier data
 carrier gateway
 carrier network
+carrier service
 carrier signal
+carrier system
 carrier to mobile
 cdma
 cdn
 cell
 cellular architecture
+cellular communication
 cellular data
 cellular device
+cellular link
 cellular network
 cellular service
 cellular signal
@@ -200,15 +284,26 @@ centralized routing algorithm
 certificate
 channel
 channel access
+channel address
+channel at base
 channel bandwidth
 channel broadcast
+channel congestion
+channel control
 channel data
 channel delay
 channel frequency
+channel protocol
 channel time
 channel to device
 channel transmission
 check algorithm
+check calculation
+check field
+checks
+checks calculation
+checks data
+checks field
 checksum calculation
 chip
 chip rate
@@ -216,6 +311,7 @@ chrome
 cidr
 circuit
 circuit switching
+class 1 and class 2
 client
 client - server
 client access
@@ -229,6 +325,7 @@ client device
 client host
 client message
 client name
+client packet
 client process
 client program
 client protocol
@@ -236,11 +333,14 @@ client query
 client request
 client request line
 client segment
+client server
 client server connection
 client server data
 client server messages
 client server protocol
+client server socket
 client server transport
+client service
 client side
 client socket
 client web
@@ -251,6 +351,7 @@ collision detection
 communication
 communication protocol
 communication service
+computer program
 computer software
 configuration
 congestion
@@ -260,23 +361,35 @@ congestion checks
 congestion control
 congestion control algorithm
 congestion control service
+congestion controller
+congestion correction
+congestion delay
 congestion detection
+congestion event
 congestion management
+congestion packet
 congestion window
 congestion window size
 connection
+connection buffer
 connection checks
 connection control
 connection data
+connection delay
+connection flooding
+connection information
+connection layer
 connection loss
 connection process
 connection protocol
 connection request
 connection request segment
+connection routing
 connection segment
 connection service
 connection table
 connection time
+connection window
 content distribution
 content processing
 control
@@ -285,14 +398,20 @@ control action
 control algorithm
 control architecture
 control channel
+control checks
 control data
 control field
+control header
 control information
+control interface
 control layer
 control management
 control message
 control messages
+control network
+control node
 control of devices
+control of the connection
 control packet
 control packet delivery
 control packets
@@ -303,8 +422,10 @@ control routing
 control segment
 control service
 control system
+control table
 control window
 controller
+controller - routing
 controller input
 cookie
 cookie data
@@ -316,8 +437,13 @@ cost calculation
 cost data
 cost of its neighbors
 cost value
+cost vector
+count checks
 crc
 cross link
+cross port
+cross switch
+crossbar
 crossbar switch
 crossbar switching fabric
 cryptography
@@ -329,37 +455,50 @@ d
 dash
 data
 data access
+data address
 data and control
+data and header
 data and ip
+data and message
 data and packet
+data and protocol
 data bandwidth
 data bits
 data broadcast
 data buffer
+data byte
 data bytes
 data cable
 data center
 data center network
 data channel
+data check
 data checks
 data communication
+data connection
 data control
 data correction
 data delivery
 data distribution
 data field
+data file
 data flow
 data flow control
 data forward
 data frame
 data frames
+data from the connection
 data gateway
 data header
 data hub
+data into the link
+data layer
 data link
 data link layer
+data link layer protocol
 data loss
 data management
+data message
 data messages
 data network
 data on the network
@@ -380,14 +519,22 @@ data server
 data service
 data signal
 data switching
+data to a visited network
+data to application
+data to destination
 data to device
 data to gateway
 data to its home network
 data to mobile
 data to mobile device
+data to network
 data to the base station
+data to the client
+data to the gateway
 data to the home gateway
+data to the network
 data to the visited network
+data to visited network
 data traffic
 data transfer
 data transfer protocol
@@ -399,17 +546,25 @@ datagram
 datagram length
 decryption algorithm
 delay
+delay and congestion
+delay avoidance
+delay of path
+delay time
+delays
 delivery
 delivery service
 des
 destination
 destination address
 destination address field
+destination ap
+destination data
 destination end system
 destination entry
 destination field
 destination frame
 destination host
+destination ip
 destination ip address
 destination mac address
 destination network
@@ -418,6 +573,11 @@ destination packet
 destination path
 destination port
 destination port number field
+destination prefix
+destination route
+destination routing
+destination server
+destination side
 destination table
 destination traffic
 destination y
@@ -425,16 +585,21 @@ detection
 detection service
 device
 device address
+device and service
 device configuration
 device connection
 device control
 device data
 device layer
+device mac
 device management
+device message
 device notification
 device security
 device signal
 devices
+dh message
+dh protocol
 dh request message
 dhcp
 dhcp discover message
@@ -443,35 +608,50 @@ dhcp server
 dig
 digital signature
 distance
+distance algorithm
 distance calculation
+distance cost vector
 distance numbers
+distance to node
+distance to y
 distance value
 distance vector
+distance vector of node z
+distribution
 distribution algorithm
+distribution of data
 dns
+dns protocol
 dns query
 dns rotation
 dns server
 docsis
 domain
+domain record
 dsl
 dsl modem
 duplicate ack
+duration
 each host
 each link
 each packet
+each route
 each station
 ebgp connection
 edge switch
+efficiency
 email delivery service
 email messages
 email security
 email transfer
 embb
 encryption algorithm
+end destination
 end device
 end system
 entry
+entry point
+error
 error - checks
 error avoidance
 error check
@@ -481,7 +661,10 @@ error control
 error correction
 error detection
 error detection and correction
+error field
+error management
 error message
+errors
 ethernet
 ethernet data
 ethernet frame
@@ -499,10 +682,15 @@ explicit congestion avoidance
 explicit congestion control
 explicit congestion notification
 fiber cable
+fiber link
 fiber optics
 field
+field bits
+field bytes
 field checks
 file
+file , client
+file access
 file data
 file distribution
 file name
@@ -512,12 +700,16 @@ file response
 file server
 file service
 file to client
+file to user
 file transfer
+file transfer protocol
 firewall
+first packet
 flags
 flow
 flow control
 flow entry
+flow forward
 flow management
 flow routing
 flow table
@@ -527,31 +719,56 @@ forward
 forward action
 forward cache
 forward error correction
+forward flow
 forward frame
 forward packet
 forward packets
 forward path
+forward route
+forward routing
 forward service
+forward side
 forward table
+forward through each input
+forward through the table
+forward transfer
 forwarding
 forwarding table
 fragmentation offset
 frame
+frame address
+frame and host
+frame and send
+frame between links
+frame checks
+frame control
 frame control field
+frame data
+frame destination to the host
 frame error detection
 frame field
 frame forward
+frame from ap
+frame from source
 frame from your device
 frame header
+frame interval
 frame service
 frame switching
+frame to ap
 frame to destination
+frame to device
+frame to the address
+frame to the carrier
 frame transfer
 frame transmission
 frame with address
 frames
+frequency channel
 ftp
+g
 gateway
+gateway address
 gateway control
 gateway device
 gateway hub
@@ -559,6 +776,9 @@ gateway interface
 gateway mac address
 gateway network
 gateway router
+gateway to base
+gateway to mobile
+gateway to the mobile
 gbn
 gigabit ethernet
 global transit isp
@@ -568,9 +788,13 @@ graph distance
 handshaking procedure
 hash function
 header
+header and data
 header bits
+header buffer
+header calculation
 header check
 header checks
+header correction
 header data
 header field
 header field checks
@@ -580,16 +804,21 @@ header length
 header line
 header of segment
 header request
+header segment
 hfc
 hidden terminal problem
+high performance
 hmac
 home
 home address
 home agent
 home gateway
+home hs
 home lan
 home network
+home network packet
 home router
+home station
 hop limit
 host
 host access
@@ -599,19 +828,24 @@ host b
 host data
 host distribution
 host entry
+host information
+host interface
 host link
 host name
 host query
 host record
 host server
+host side
 host system
 hostname
 hosts
 hot potato routing
+hotmail
 hs
 hss
 html file
 http
+http address
 http application
 http cache
 http client
@@ -620,12 +854,14 @@ http file
 http header
 http message
 http message to client
+http message to server
 http messages
 http page
 http protocol
 http request
 http request cookie
 http request header
+http request header line
 http request line
 http request message
 http request messages
@@ -634,23 +870,39 @@ http response
 http response message
 http server
 http service
+http transfer
+http video
+http web service
 hub
+ic message
 icann
 icmp
+icmp source quench message
 identifier
+idle
 idle bandwidth
 idle channel
+idle detection
 idle link
+idle rate
 idle resources
 idle slot
+idle time
 idle transmission
+ike
 imap
 imsi
+in the frame
+incoming packet
+incoming packets
 indirect routing
 information
 information distribution
+information field
 information flow
+information function
 information message
+information messages
 information packet
 information packets
 information routing
@@ -671,6 +923,7 @@ input switching
 institutional network
 institutional router
 interface
+interface address
 interface data
 intermediate dns server
 internal router
@@ -678,6 +931,7 @@ internet
 internet access
 internet address
 internet applications
+internet browser
 internet data
 internet explorer
 internet information
@@ -687,13 +941,16 @@ internet link
 internet message
 internet name
 internet network
+internet organization
 internet packet
 internet packets
 internet phone
+internet protocol
 internet protocol stack
 internet protocols
 internet router
 internet routing
+internet routing protocol
 internet security
 internet server
 internet service
@@ -703,37 +960,55 @@ internet transport
 internet video service
 internet web
 interval
+intrusion detection system
 ip
 ip address
 ip address mac address
+ip address to client
 ip address to host
+ip address to the device
 ip addresses
 ip addresses mac addresses
+ip addressing
+ip and host
 ip broadcast address
 ip bytes
 ip configuration
 ip connection
 ip data
 ip datagram
+ip destination
+ip destination address
 ip devices
 ip field
+ip frame
 ip gateway
 ip header
 ip header field
 ip host
 ip information
+ip interface
 ip layer
 ip mac
+ip network
 ip network transport
 ip packet
 ip packets
+ip port number
 ip protocol
 ip protocol number
+ip record
 ip route
 ip routing
+ip routing protocol
+ip security
 ip segment
 ip server
+ip sub network
 ip to client
+ip to gateway
+ip to host
+ip traffic
 ipsec
 ipsec datagram
 ipv4
@@ -744,21 +1019,36 @@ ipv6 header
 ipv6 node
 isp
 its address
+its channel
 its cost
 its data
 its distance
+its file
 its frame
+its gateway
+its host
+its ip
+its mac
 its mac address
+its management
+its message
 its network
 its route
+its window
+lacnic
 lan
+lan infrastructure
 lan network
 larger regional isp
 layer
+layer and protocol
 layer header
 layer protocol
 layer service
 layer transport
+least cost
+least cost path
+least distance
 leftmost router
 length of interval
 line card
@@ -767,13 +1057,17 @@ link - layer data
 link - layer frame
 link - layer header and frame
 link access
+link collision
+link congestion
 link connection
 link control
 link cost
 link data
 link delay
 link frame
+link idle
 link information
+link interface
 link layer
 link layer access
 link layer data
@@ -786,10 +1080,14 @@ link layer transfer
 link loss
 link number
 link protocol
+link routing
+link routing protocol
 local cache
 local client
 local data
+local device
 local dns server
+local gateway
 local host
 local hub
 local server
@@ -798,25 +1096,40 @@ loss avoidance
 loss checks
 loss control
 loss detection
+loss event
 ls algorithm
 lte
 mac
 mac address
+mac address ap
+mac address table
+mac address wireless station
+mac field
 mac header
+mac layer
+mac protocol
 mail
 mail address
+mail application
 mail cache
 mail client
+mail file
 mail host
+mail message
 mail message to client
 mail messages
+mail notification
 mail program
 mail server
 mail service
+mail to the client
+mail to the host
 mail transfer
 mail transfer service
 managed device
 management
+management application
+management layer
 management service
 management system
 managing server
@@ -825,30 +1138,48 @@ master secret
 maximum delay
 maximum distribution
 maximum rate
+md5
 medium access
 medium access protocol
 message
 message - transfer
+message and connection
+message and data
 message authentication code
 message broadcast
 message buffer
+message bytes
 message cache
+message calculation
+message checking
 message checks
+message communication
+message control
 message data
 message delivery
+message detection
+message flow
+message from server
 message header
+message line
+message notification
 message number
 message of data
+message protocol
 message queue
+message reply
 message response
 message security
 message server
 message service
 message to base station
 message to browser
+message to cache
 message to client
 message to device
+message to host
 message to mobile
+message to mobile device
 message to server
 message to source base station
 message to the browser
@@ -860,21 +1191,31 @@ messages
 minimum cost
 minimum cost of the path
 minimum cost path
+minimum delay
+minimum path length
 mm signal
 mme
 mobile
 mobile access
+mobile address
+mobile and stations
+mobile at the base
+mobile base
 mobile communication
 mobile data
 mobile data plane
 mobile device
 mobile device address
 mobile device control
+mobile device visited network
 mobile devices
 mobile gateway
 mobile host
 mobile ip
 mobile network
+mobile node
+mobile point
+mobile protocol
 mobile signal
 mobile station
 mobile stations
@@ -888,24 +1229,36 @@ multiple access protocol
 multiple address
 multiple addresses
 multiple bandwidth
+multiple bits
 multiple bits transfer
+multiple channel
 multiple checks
+multiple communication channel
+multiple connections
+multiple data segment
 multiple data transfer
 multiple destination path
 multiple devices
 multiple ip addresses
 multiple link bandwidth
+multiple links
 multiple packet checks
+multiple packet delivery
 multiple packet transfer
+multiple paths
+multiple protocol
 multiple protocols
+multiple segment
 multiple traffic
 multiple traffic routing
 nak
 name
 name address
+name of server
 name query
 name record
 name server
+nat
 nat gateway router
 nat router
 neighbor
@@ -927,24 +1280,30 @@ network communication
 network configuration
 network congestion
 network congestion control
+network congestion controller
 network connection
 network control
+network control application
 network control architecture
 network control layer
 network controller
 network data
 network delay
+network destination
 network device
 network efficiency
 network field
 network flow
 network frame
 network gateway
+network header
+network host
 network information
 network infrastructure
 network interface
 network interface card
 network layer
+network layer data
 network layer field
 network layer protocol
 network layer service
@@ -957,6 +1316,7 @@ network message
 network mobility
 network node
 network of node
+network organization
 network packet
 network packets
 network path
@@ -964,40 +1324,55 @@ network point
 network program
 network protocol
 network protocols
+network route
 network routing
 network security
 network segment
+network server
 network service
 network signal
+network software
+network source
 network station
 network switch
 network system
+network to host
+network to station
 network traffic
 network transmission
 network transport
 networking
+networking protocol
 networks
 next header
 next node
 next packet
 node
+node cost
 node delay
 node distance
+node distance vector
 node protocol
+node sequence
 node transmission
 node x
 node y
 node z
 nodes
 notification message
+notification service
 nslookup
+number
 object
+object bytes
+one file
 one host
 onos
 opendaylight
 openflow
 openflow protocol
 origin server
+os
 ospf
 other device
 other stations
@@ -1007,61 +1382,103 @@ outgoing traffic
 output
 output buffer
 output control
+output data
+output delay
+output flow
 output frame
+output function
+output information
+output interface
 output link
+output of the routing table
 output packet
 output packets
 output path
 output port
+output port flow
 output port queue
 output ports
 output queue
+output rate
+output table
+p
 p2p architecture
 packet
+packet , segment
 packet action
+packet and data
 packet arrival rate
 packet at link
+packet avoidance
 packet buffer
+packet channel
 packet checks
 packet checksum field
+packet communication
 packet control
 packet data
 packet delay
 packet delivery
+packet error checks
 packet error correction
+packet error detection
 packet field
 packet fields
 packet filter
 packet flow
 packet forward
+packet forward to destination
 packet forwarding
 packet frame
 packet from address
 packet from destination
+packet from each input port
+packet from input
 packet from input port
+packet from input to output
+packet from route
 packet from source
 packet from source port
 packet header
 packet in link
 packet information
+packet length
 packet loss
+packet loss avoidance
 packet loss checks
 packet loss detection
+packet management
+packet number
 packet of data
 packet queue
 packet rate
+packet received
 packet receiving
 packet route
 packet routing
 packet sequence
 packet service
+packet size
 packet sniffer
 packet switch
 packet switching
 packet through gateway
+packet through link
 packet to client
 packet to destination
+packet to destination address
+packet to destination port
+packet to device
 packet to gateway
+packet to host
+packet to its destination
+packet to link
+packet to output
+packet to output ports
+packet to receiver
+packet to route
+packet to server
+packet to switch
 packet to the destination
 packet traffic
 packet transfer
@@ -1073,25 +1490,33 @@ packets from each input port
 packets from link
 packets to gateway
 page
+page cache
 page response
+page to client
 parallel connections
 passive scanning
 path
 path algorithm
 path calculation
+path control
+path cost
 path information
+path length
 path of route
 path routing algorithm
 path to destination
+path vector
 payload length
 pd gateway
 peer
+peer addresses
 peer data
 peer distribution
 peer request
 peers distribution
 peers ip addresses
 performance data
+permanent address
 permanent ip address
 persistent connection
 pgp
@@ -1110,13 +1535,19 @@ port address
 port controller
 port number
 port number field
+port number field of header
+port service
+port socket
 port value
 ports
 prefix address
 prefix entry
+prefix table
 prefix value
 prefix values
+priority checks
 process
+process layer
 processing delay
 program
 propagation delay
@@ -1128,8 +1559,11 @@ protocol header
 protocol information
 protocol layer
 protocol management
+protocol message
 protocol number
 protocol service
+protocol socket
+protocols
 proxy cache
 public key cryptography
 public key server
@@ -1137,12 +1571,16 @@ query
 query cache
 query message
 query name
+query of server
 query queue
 query response
+query server
 query service
+query to destination
 query to the server
 query to the servers
 queue
+queue buffer
 queue delay
 queue delays
 queue length
@@ -1150,17 +1588,24 @@ queuing delay
 quic
 quic packet header
 radio
+radio base
 radio broadcast
 radio channel
+radio communication
+radio layer
 radio link
 radio network
+radio point
+radio protocol
 radio signal
 radio signals
+radio spectrum
 radio station
 radio transmission
 random access
 random early detection
 rate
+rate avoidance
 rate calculation
 rate control
 rdt
@@ -1169,6 +1614,8 @@ receiver
 receiver address
 receiver behavior
 receiver buffer
+receiver checks
+receiver detection
 receiver loss
 receiver window
 record
@@ -1185,6 +1632,7 @@ reliable service
 reliable transfer
 reliable transmission
 reliable transport
+remote access
 remote address
 remote ap
 remote configuration
@@ -1201,7 +1649,12 @@ remote ip
 remote management
 remote network
 remote server
+remote station
+remote switch
+remote transfer
 reply
+reply message
+reply to the client
 request
 request header
 request line
@@ -1209,10 +1662,12 @@ request message
 request messages
 request response
 request service
+request to server
 response
 response data
 response header
 response message
+response message to the cache
 response messages
 response to browser
 response to client
@@ -1223,7 +1678,9 @@ response to the cache
 rip
 ripe
 root dns server
+root server
 root servers
+round robin service
 route
 route algorithm
 route avoidance
@@ -1232,28 +1689,38 @@ route control
 route distribution
 route entry
 route information
+route path
 route prefix
 route table
+route tables
+route to host
 router
+router interface
 routing
 routing algorithm
+routing and control
 routing and forward
 routing application
 routing between multiple network
 routing between multiple path
 routing between node and host
 routing calculation
+routing configuration
 routing control
+routing controller
+routing cost
 routing data
 routing delay
 routing entry
 routing function
 routing gateway
 routing information
+routing layer
 routing management
 routing messages
 routing network
 routing node
+routing of network
 routing path
 routing path through network
 routing paths
@@ -1261,27 +1728,46 @@ routing policy
 routing problem
 routing processor
 routing protocol
+routing protocols
 routing service
 routing switch
 routing system
 routing table
+routing table entry
+routing tables
+routing value
 rsa
+rt
+rt control
+rt network
+rt service
 rts frame
+sd control
 sd controller
 sd network
 sdn
 sdn controller
 security
+security and control
 security architecture
+security association
 security checks
 security control
 security detection
+security protocol
 security service
 security services
 segment
+segment , connection
 segment , data
+segment , segment
 segment .
+segment and buffer
 segment and data
+segment and packet
+segment bytes
+segment calculation
+segment check
 segment checks
 segment data
 segment from the host
@@ -1294,36 +1780,52 @@ segment of data
 segment of sequence
 segment of the protocol
 segment over link
+segment rate
+segment sent
 segment sequence
 segment sequence number
 segment service
 segment size
+segment to application
 segment to device
+segment to gateway
+segment to receiver
+segment to the connection
 segment transfer
 segment transmission
 segment window
 segments
 selective repeat
+send rate
+sending
 sequence
 sequence checks
 sequence field
 sequence number
 sequence number field
+sequence of bit
 sequence of bits
 server
 server access
 server address
+server and mail
 server application
 server b
 server buffer
 server cache
+server checks
+server client protocol
+server connection
 server control
 server data
 server file
+server header
 server host
 server message
 server messages
+server name
 server node
+server port
 server process
 server program
 server reply
@@ -1333,24 +1835,36 @@ server segment
 server service
 server side
 server socket
+server to client
 servers
 service
+service architecture
+service checks
 service data
 service field
 service information
+service layer
 service management
+service of the base
+service plane
 service protocol
+service rate
 serving gateway
 shared bus
 signal
 signal access point
 signal ap
+signal bandwidth
 signal broadcast
+signal detection
 signal from device
 signal from mobile
+signal loss
+signal rate
 signal to base station
 signal to device
 signal to mobile
+signal to the gateway
 signal to the network
 signal transmission
 signals
@@ -1360,26 +1874,38 @@ single parity bit
 site name
 slow start
 slow start and avoidance
+slow window
 smtp
 smtp client
 smtp server
 snmp
+snmpv3
 snort
 socket
 socket client
 socket input
+socket output
+socket protocol
 socket server
 software
+source
 source address
 source base station
 source data
+source host
+source ip
+source ip address
 source link
 source mac address
 source node
+source of data
+source packet
+source port
 source port number field
 source query
 source routing
 source station
+source to destination
 spectrum channel
 spectrum efficiency
 speed
@@ -1391,9 +1917,12 @@ stations
 status line
 streaming service
 streaming video
+sub field
+sub field bits
 sub field bytes
 sub field value
 sub network
+sub protocol
 subnet
 switch
 switch controller
@@ -1405,11 +1934,17 @@ switch port
 switch ports
 switch table
 switched local network
+switched table
 switches
 switching
+switching channel
+switching congestion
 switching control
+switching delay
 switching fabric
 switching interface
+switching layer
+switching network
 switching node
 switching port
 switching protocol
@@ -1419,14 +1954,22 @@ symmetric key encryption
 syn segment
 system
 system message
+system performance
 table
 taking turns
 target base station
+tc
 tc - control
 tc congestion control
+tc connection
 tc control
 tc ip
 tc p
+tc protocol
+tc segment
+tc server
+tc socket
+tc transport
 tcp
 tcp connection establishment
 tcp cubic
@@ -1436,54 +1979,97 @@ tcp segment header
 tcpclient
 tcpserver
 telnet
+the access protocol
 the address
 the address for the client
 the address of its device
 the address of the host
 the address to the client
+the bandwidth
+the base
 the base station
 the channel
 the client
 the client query
+the congestion
 the congestion control
 the data
 the data segment
+the delay
 the destination address
+the device
 the file
 the frame
 the frame to the host
 the frames
 the gateway
+the gateway.
 the header
 the host
 the http message
 the http message to client
 the http request
+the internet
+the ip
 the ip address
+the ip data
+the ip header
 the ip network
 the ip protocol
+the link
+the link layer
 the mac address
 the mail
+the mail message
 the message
+the mobile device
 the name server
 the network
+the network connection
+the node
+the other end
+the other system
 the packet
+the packet forward
+the packets
+the path
 the protocol
 the query
+the query to its server
+the query to server
+the queue of packets
 the request
 the route
+the route to a gateway
+the route to destination
+the route to host
+the routing table
+the same packet
 the segment
 the segment and data
+the segment from the connection
 the segment in a connection
 the segments
 the sequence number
+the sequence of a segment
+the server
+the service
 the source data
 the source station
+the station
+the sub network
 the switch
+the switch interface
+the transmission for each packet
+the ud
+the user
 the user query
 the web page
 the window
 the wireless access layer
+tier and access network
+tier hub
+tier link
 tier network
 tier switch
 time
@@ -1494,47 +2080,73 @@ timer
 timer checks
 tld server
 tls
+to a wireless station
+to destination
+to device
+to mobile stations
+to the base station
 to the gateway
+to the host and to the gateway
+to the wireless station
 tor switch
 torrent
 tracker
 traffic
 traffic amount
+traffic avoidance
 traffic class
+traffic congestion
+traffic connection
 traffic control
+traffic delay
 traffic detection algorithm
 traffic distribution
 traffic flow
 traffic forward
+traffic information
 traffic intensity
 traffic management
 traffic packet
 traffic rate
+traffic route
 traffic routing
 traffic switching
 transfer
 transfer delay
+transfer of data
+transfer protocol
 transfer rate
 transmission
 transmission channel
+transmission checks
 transmission control
 transmission delay
 transmission loss
 transmission power
 transmission rate
 transmission service
+transmission speed
 transmission time
+transmit bit
+transmit frame.
 transmitted data
 transmitted packet
+transmitting rate
+transmitting signal
 transport
 transport - layer
+transport - layer header
+transport - layer segment
 transport control
+transport data
 transport header
 transport layer
+transport layer header
 transport layer protocol
 transport layer segment
 transport layer service
 transport protocol
+transport protocols
 transport security
 transport segment
 transport service
@@ -1544,14 +2156,21 @@ tunnel
 tunnel endpoint identifier
 tunneling
 type of service
+ud
+ud ,
+ud and tc
 ud and tc transport
+ud checks
+ud host
 ud p
+ud protocol
 ud transport
 ud transport protocol
 udp
 udp checksum
 udp segment
 udpclient
+upstream channel
 url
 user
 user agent
@@ -1559,7 +2178,11 @@ user application
 user browser
 user data
 user device
+user id
+user mail
+user notification
 user query
+user service
 version number
 video
 video data
@@ -1568,10 +2191,13 @@ video servers
 video streaming
 visited gateway
 visited network
+visited network address
 visited network gateway router
 visited networks
 vlan
+vlan tag
 web
+web address to client
 web application
 web browser
 web cache
@@ -1594,10 +2220,15 @@ window buffer
 window calculation
 window check
 window checks
+window congestion
 window control
 window field
 window management
+window modulation
 window number
+window protocol
+window rate
+window service
 window size
 wire
 wire access
@@ -1618,14 +2249,20 @@ wireless frames
 wireless g
 wireless gateway
 wireless host
+wireless interface
+wireless layer
 wireless link
 wireless message
 wireless network
 wireless networking
 wireless networks
 wireless point
+wireless protocol
 wireless service
 wireless signal
 wireless station
+wireless station destination
 wireless transmission
+wpa2
+www . video . com
 www server

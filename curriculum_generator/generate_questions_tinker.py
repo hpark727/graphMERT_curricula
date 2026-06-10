@@ -49,7 +49,14 @@ class PathGenerator:
             'sends',
             'supports',
         ]
-        self.hierarchy_relations = {'is_a', 'part_of', 'has_part', 'contains'}
+        self.hierarchy_relations = set()
+
+        degrees = sorted(dict(self.graph.degree()).values())
+        hub_threshold = degrees[int(0.99 * len(degrees))]
+        self.hub_nodes = {n for n, d in dict(self.graph.degree()).items() if d >= hub_threshold}
+
+        self.weak_relations = {'is_a', 'part_of', 'has_part', 'contains', 'supports'}
+        self.weak_relation_weight = 0.1
 
     def _update_vocab_freq(self, path: str):
         with open(path, 'r') as f:
@@ -77,15 +84,16 @@ class PathGenerator:
 
         for _ in range(k):
             neighbors = list(self.graph.neighbors(current))
-            filtered = []
-            for n in neighbors:
-                rel_idx = self.graph[current][n][0]['rel'] % len(self.relations)
-                if self.relations[rel_idx] not in self.hierarchy_relations:
-                    filtered.append(n)
-            available = [n for n in filtered if n not in visited]
+            available = [n for n in neighbors if n not in visited and n not in self.hub_nodes]
             if not available:
                 return [], False
-            neighbor = random.choice(available)
+            weights = [
+                self.weak_relation_weight
+                if self.relations[self.graph[current][n][0]['rel'] % len(self.relations)]
+                in self.weak_relations else 1.0
+                for n in available
+            ]
+            neighbor = random.choices(available, weights=weights, k=1)[0]
             visited.add(neighbor)
             rel_idx = self.graph[current][neighbor][0]['rel'] % len(self.relations)
             paths.append((current, neighbor, self.relations[rel_idx]))

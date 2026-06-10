@@ -15,7 +15,7 @@ CSV_PATH = "/Users/haelpark/bottom-up-superintelligence/networks_kg/validated_tr
 OUT_DIR  = "/Users/haelpark/bottom-up-superintelligence/curriculum_generator/data_kg/networks_kg"
 
 # Only keep triples validated by both models
-FILTER = lambda row: row["verdict_qwen"].strip() == "yes" and row["verdict_gpt"].strip() == "yes"
+FILTER = lambda row: row["verdict_qwen"].strip() == "yes" or row["verdict_gpt"].strip() == "yes"
 
 # Relations that express pure hierarchy/containment — filtered out during
 # random walks (same role as 'belongs_to_the_category_of' in the DDB KG)
