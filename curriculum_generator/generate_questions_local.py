@@ -241,10 +241,6 @@ class LocalLLMBackend:
         return question_extracted, answer_match.group(1)
 
     def quality_filtering(self, question: str) -> bool:
-        q_lower = question.lower()
-        required_tags = ['<question>', '</question>', '<options>', '</options>']
-        if not all(tag in q_lower for tag in required_tags):
-            return False
         if not all(opt in question for opt in ['A.', 'B.', 'C.', 'D.']):
             return False
         for line in question.splitlines():
@@ -297,29 +293,53 @@ class LocalLLMBackend:
 
 
 def _shuffle_answer_options(question_text: str, correct_answer: str) -> Tuple[str, str]:
-    options_match = re.search(r'(<[Oo]ptions>)(.*?)(</[Oo]ptions>)', question_text, re.DOTALL | re.IGNORECASE)
-    if not options_match:
-        return question_text, correct_answer
-    options_content = options_match.group(2)
-    option_lines = re.findall(r'([A-D])\.\s+(.+?)(?=\n[A-D]\.|$)', options_content, re.DOTALL)
+    # Try XML-tagged options block first, then fall back to bare A./B./C./D. lines
+    tagged = re.search(r'(<[Oo]ptions>)(.*?)(</[Oo]ptions>)', question_text, re.DOTALL | re.IGNORECASE)
+    if tagged:
+        search_text = tagged.group(2)
+        use_tagged = True
+    else:
+        search_text = question_text
+        use_tagged = False
+
+    option_lines = re.findall(r'([A-D])\.\s+(.+?)(?=\n[A-D]\.|$)', search_text, re.DOTALL)
     if len(option_lines) != 4:
         return question_text, correct_answer
+
     letters = ['A', 'B', 'C', 'D']
     orig_texts = {letter: text.strip() for letter, text in option_lines}
     correct = correct_answer.strip().upper()
     if correct not in orig_texts:
         return question_text, correct_answer
+
     indices = list(range(4))
     random.shuffle(indices)
     correct_orig_idx = letters.index(correct)
     new_correct = letters[indices.index(correct_orig_idx)]
     shuffled_texts = [orig_texts[letters[i]] for i in indices]
-    new_options_block = '\n' + '\n'.join(f'{letters[i]}. {shuffled_texts[i]}' for i in range(4)) + '\n'
-    new_question_text = (
-        question_text[:options_match.start(2)] +
-        new_options_block +
-        question_text[options_match.end(2):]
-    )
+    new_options_block = '\n'.join(f'{letters[i]}. {shuffled_texts[i]}' for i in range(4))
+
+    if use_tagged:
+        new_question_text = (
+            question_text[:tagged.start(2)] + '\n' + new_options_block + '\n' +
+            question_text[tagged.end(2):]
+        )
+    else:
+        # Replace the original A./B./C./D. block inline
+        block_match = re.search(
+            r'A\.\s+.+?(?=\n[A-D]\.).+?(?=\n[A-D]\.).+?(?=\n[A-D]\.).+?$',
+            question_text, re.DOTALL | re.MULTILINE
+        )
+        if block_match:
+            new_question_text = (
+                question_text[:block_match.start()] + new_options_block +
+                question_text[block_match.end():]
+            )
+        else:
+            new_question_text = re.sub(
+                r'[A-D]\.\s+.+', lambda m: '', question_text, count=4
+            ) + '\n' + new_options_block
+
     return new_question_text, new_correct
 
 
@@ -369,6 +389,16 @@ class QAGeneratorLocal:
                 pass
 
         raw_questions = self.llm.generate_questions_batch(paths_batch)
+
+        # Debug: dump raw outputs so we can inspect model format
+        debug_path = os.path.join(os.path.dirname(__file__), '..', 'debug_raw_outputs.jsonl')
+        with open(debug_path, 'a') as dbg:
+            for path, raw in zip(paths_batch, raw_questions):
+                dbg.write(json.dumps({
+                    'source': path['source_concept'],
+                    'target': path['target_concept'],
+                    'raw': raw,
+                }) + '\n')
 
         results = []
         for path, raw in zip(paths_batch, raw_questions):
