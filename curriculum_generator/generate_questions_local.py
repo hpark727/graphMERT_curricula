@@ -382,16 +382,6 @@ class QAGeneratorLocal:
 
         raw_questions = self.llm.generate_questions_batch(paths_batch)
 
-        # Debug: dump raw outputs so we can inspect model format
-        debug_path = os.path.join(os.path.dirname(__file__), '..', 'debug_raw_outputs.jsonl')
-        with open(debug_path, 'a') as dbg:
-            for path, raw in zip(paths_batch, raw_questions):
-                dbg.write(json.dumps({
-                    'source': path['source_concept'],
-                    'target': path['target_concept'],
-                    'raw': raw,
-                }) + '\n')
-
         results = []
         for path, raw in zip(paths_batch, raw_questions):
             try:
