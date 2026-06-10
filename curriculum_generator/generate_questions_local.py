@@ -249,14 +249,6 @@ class LocalLLMBackend:
                         and line.strip().startswith(opt)
                         and len(line.strip()) < 5):
                     return False
-        prompt = f"""
-        Check whether the answer options in this question are near-duplicates of each other.
-        Respond with only 'Yes' or 'No'. 'Yes' if the options are distinct, 'No' if near-duplicates.
-        Question: {question}
-        """
-        content = self._generate(prompt, max_tokens=10, temperature=0.0)
-        if content and content.strip().lower().startswith('no'):
-            return False
         return True
 
     def generate_thinking_trace(self, question: str, paths: List[Dict]) -> Optional[str]:
