@@ -15,6 +15,9 @@ from google import genai
 from typing import Optional
 import os
 import re
+import asyncio
+import tinker
+from tinker import types as tinker_types
 
 class PathGenerator:
     def __init__(self, vocab_path: str, graph_path: str, icd10_categories_path: str, vocab_freq_path: str = None):
@@ -28,21 +31,25 @@ class PathGenerator:
             self.vocab_freq = self.__update_vocab_freq(vocab_freq_path)
             print("Updated vocab freq")
         self.merged_relations = [
-            'belongs_to_the_category_of',
-            'is_a_category',
-            'maybe_cause',
-            'is_a_subtype_of',
-            'is_a_risk_factor_of',
-            'is_associated_with',
-            'may_contraindicate',
-            'interacts_with',
-            'belongs_to_the_drug_family_of',
-            'belongs_to_drug_super-family',
-            'is_a_vector_for',
-            'may_be_allelic_with',
-            'see_also',
-            'is_an_ingredient_of',
-            'may_treat'
+            'causes',
+            'communicates_with',
+            'connects_to',
+            'contains',
+            'enables',
+            'forwards',
+            'has_part',
+            'identifies',
+            'implements',
+            'increases',
+            'is_a',
+            'operates_at',
+            'part_of',
+            'provides',
+            'receives',
+            'requires',
+            'runs_on',
+            'sends',
+            'supports',
         ]
 
     def __update_vocab_freq(self, path: str) -> Dict:
@@ -86,7 +93,7 @@ class PathGenerator:
                 if rel >= len(self.merged_relations):
                     rel = rel - len(self.merged_relations)
                 relation = self.merged_relations[rel]
-                if relation not in ['belongs_to_the_category_of', 'is_a_category', 'is_a_subtype_of']:
+                if relation not in ['is_a', 'part_of', 'has_part', 'contains']:
                     filtered_neighbors.append(n)
             neighbors = filtered_neighbors
             available_neighbors = [n for n in neighbors if n not in all_nodes]
@@ -338,20 +345,154 @@ class GeminiLLMBackend:
         return correct_str
 
 
-class QAGenerator:
-    def __init__(self, api_key: str = None):
-        cwd = os.getcwd()
-        if api_key is None:
-            raise ValueError("GOOGLE_API_KEY is required")
-        os.environ['GOOGLE_API_KEY'] = api_key
-        base_dir = os.path.dirname(__file__)
-        self.generator = PathGenerator(
-            vocab_path=os.path.join(base_dir, 'data_kg', 'data_preprocessed_biomed', 'ddb', 'vocab.txt'),
-            graph_path=os.path.join(base_dir, 'data_kg', 'data_preprocessed_biomed', 'ddb', 'ddb.graph'),
-            icd10_categories_path=os.path.join(base_dir, 'data_kg', 'icd10_categories.json')
-        )
+class TinkerLLMBackend:
+    def __init__(self, model_name: str = 'openai/gpt-oss-120b', domain: str = 'computer networking'):
+        self.domain = domain
+        self.service_client = tinker.ServiceClient()  # reads TINKER_API_KEY from env
+        self.sampling_client = self.service_client.create_sampling_client(base_model=model_name)
+        self.tokenizer = self.sampling_client.get_tokenizer()
 
-        self.llm = GeminiLLMBackend()
+    def _generate(self, prompt: str, max_tokens: int = 2048, temperature: float = 0.7) -> Optional[str]:
+        messages = [{"role": "user", "content": prompt}]
+        chat_text = self.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+        prompt_input = tinker_types.ModelInput.from_ints(self.tokenizer.encode(chat_text))
+        params = tinker_types.SamplingParams(max_tokens=max_tokens, temperature=temperature)
+
+        async def _run():
+            result = await self.sampling_client.sample_async(
+                prompt=prompt_input, sampling_params=params, num_samples=1
+            )
+            return self.tokenizer.decode(result.sequences[0].tokens)
+
+        return asyncio.run(_run())
+
+    def generate_question(self, source_concept: str, target_concept: str, paths: List[Dict]) -> Optional[str]:
+        paths_str = ', '.join([f"({p['start']} , {p['relation']}, {p['end']})" for p in paths])
+        prompt = f"""
+        Create a {self.domain} exam question for advanced students that tests the relationship between
+        '{source_concept}' and '{target_concept}'. The relationship is: {paths_str}.
+
+        The question should:
+        1. Be in multiple choice format (4 options)
+        2. Require reasoning along the relationship
+        3. Include a brief scenario or context
+        4. Not directly mention the relationship in the question stem
+        5. Have one clearly correct answer
+
+        Format:
+        <Question>
+        [Scenario or context]
+        </Question>
+        <Options>
+        A. [Option]
+        B. [Option]
+        C. [Option]
+        D. [Option]
+        </Options>
+        <Answer> [Correct Option Letter] </Answer>
+        """
+        return self._generate(prompt)
+
+    def separate_question_and_answer(self, question: str) -> Tuple[str, str]:
+        question_extracted = question.split('<Answer>')[0]
+        answer = question.split('<Answer>')[1].split('</Answer>')[0].strip()
+        return question_extracted, answer
+
+    def quality_filtering(self, question: str) -> bool:
+        required_tags = ['<Question>', '</Question>', '<Options>', '</Options>']
+        if not all(tag in question for tag in required_tags):
+            print("Required tags not present")
+            return False
+        options = ['A.', 'B.', 'C.', 'D.']
+        if not all(opt in question for opt in options):
+            print("Options not present")
+            return False
+        for line in question.splitlines():
+            for opt in ['A.', 'B.', 'C.', 'D.']:
+                if all(ord(c) < 128 for c in line.strip()) and line.strip().startswith(opt) and len(line.strip()) < 5:
+                    print("Short ASCII-only option")
+                    return False
+        prompt = f"""
+        You will be given a question and you will need to check that the options are not near duplicates of each other.
+        Only respond with: 'Yes' or 'No', nothing else. 'Yes' if the options are not near duplicates, 'No' otherwise.
+        Check the question: {question}
+        """
+        try:
+            content = self._generate(prompt, max_tokens=10, temperature=0.0)
+            if content and content.strip().lower() == 'no':
+                print("Options are near duplicates")
+                return False
+        except Exception as e:
+            print(f"Error checking question quality: {e}")
+            return False
+        return True
+
+    def generate_thinking_trace(self, question: str, paths: List[Dict]) -> Optional[str]:
+        paths_str = ', '.join([f"({p['start']} , {p['relation']}, {p['end']})" for p in paths])
+        prompt = f"""
+        Generate a detailed thinking trace for the answer to the following question: {question}
+        Use this context to guide your reasoning: {paths_str}.
+
+        The explanation should:
+        1. Be detailed and include all steps leading to the correct answer.
+        2. Use the provided context to explain the relationship between concepts.
+        3. Not mention that you are using provided context.
+        4. Sound like a knowledgeable student explaining to a peer.
+        """
+        return self._generate(prompt, max_tokens=2048)
+
+    def combine_question_and_thinking_trace_with_answer(self, question: str, explanation: str, answer: str) -> str:
+        return f"{question}\n<Explanation>\n{explanation}\n</Explanation>\n<Answer>:\n{answer}\n</Answer>"
+
+    def correctness_filtering(self, question_answer_explanation: str, paths: List[Dict]) -> bool:
+        paths_str = ', '.join([f"({p['start']} , {p['relation']}, {p['end']})" for p in paths])
+        prompt = f"""You are an expert examiner in {self.domain}. You are given a question and an explanation with an answer formatted as:
+        <Question>: [Scenario] </Question>
+        <Options> A. ... B. ... C. ... D. ... </Options>
+        <Explanation>: [Explanation] </Explanation>
+        <Answer>: [Correct Option Letter] </Answer>
+
+        Judge whether the question and answer are logically correct and accurate given the source.
+        Respond with only "Yes" or "No" in this exact format:
+        Correct: [Yes/No]
+
+        Question and Answer: {question_answer_explanation}
+        Source: {paths_str}
+        """
+        try:
+            content = self._generate(prompt, max_tokens=20, temperature=0.0)
+        except Exception as e:
+            print(f"Error in correctness filtering: {e}")
+            return None
+
+        correct_match = re.search(r'Correct:\s*(Yes|No)', content, re.IGNORECASE)
+        if correct_match is None:
+            return "error"
+        return "Yes" if correct_match.group(1).lower() == "yes" else "No"
+
+
+class QAGenerator:
+    def __init__(self, api_key: str = None, backend: str = 'tinker',
+                 model_name: str = 'Qwen/Qwen3-32B-Instruct-2507',
+                 domain: str = 'computer networking',
+                 vocab_path: str = None, graph_path: str = None, categories_path: str = None):
+        base_dir = os.path.dirname(__file__)
+
+        if backend == 'tinker':
+            if api_key:
+                os.environ['TINKER_API_KEY'] = api_key
+            self.llm = TinkerLLMBackend(model_name=model_name, domain=domain)
+        else:
+            if api_key is None:
+                raise ValueError("GOOGLE_API_KEY is required for gemini backend")
+            os.environ['GOOGLE_API_KEY'] = api_key
+            self.llm = GeminiLLMBackend()
+
+        self.generator = PathGenerator(
+            vocab_path=vocab_path or os.path.join(base_dir, 'data_kg', 'networks_kg', 'vocab.txt'),
+            graph_path=graph_path or os.path.join(base_dir, 'data_kg', 'networks_kg', 'networks.graph'),
+            icd10_categories_path=categories_path or os.path.join(base_dir, 'data_kg', 'networks_kg', 'categories.json')
+        )
 
     def generate_questions(self, k_hops: int = 1, category: str = None) -> List[Dict]:
         path = self.generator.generate_paths(

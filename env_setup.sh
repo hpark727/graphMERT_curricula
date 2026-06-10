@@ -19,18 +19,18 @@ conda install pytorch=2.5.1 torchvision=0.20.1 torchaudio=2.5.1 pytorch-cuda=12.
 
 # Install core ML packages
 echo "Installing core ML packages..."
-pip install transformers==4.54.1 \
+pip install transformers \
             datasets==4.0.0 \
-            tokenizers==0.21.4 \
+            tokenizers \
             accelerate==1.9.0 \
             peft==0.16.0 \
             networkx==3.4.2 \
-            google-generativeai==0.8.5
+            python-dotenv \
+            huggingface_hub
 
-
-# Install vLLM for fast inference
+# Install vLLM for fast inference (0.8+ required for Gemma 3 support)
 echo "Installing vLLM..."
-pip install vllm==0.7.3
+pip install "vllm>=0.8.0"
 
 
 # Install additional useful packages for evaluation
