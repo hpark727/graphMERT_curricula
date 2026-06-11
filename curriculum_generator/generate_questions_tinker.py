@@ -86,6 +86,9 @@ class PathGenerator:
             neighbors = list(self.graph.neighbors(current))
             available = [n for n in neighbors if n not in visited and n not in self.hub_nodes]
             if not available:
+                # Fallback: allow hub nodes rather than dead-ending the path
+                available = [n for n in neighbors if n not in visited]
+            if not available:
                 return [], False
             weights = [
                 self.weak_relation_weight

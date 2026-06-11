@@ -25,7 +25,7 @@ def generate_curriculum_local(
     domain: str = 'computer networking',
     hf_cache_dir: str = None,
     batch_size: int = 32,
-    error_threshold: int = 10,
+    error_threshold: int = 50,
 ) -> None:
 
     output_file = os.path.join(output_dir, f"curriculum_dataset_hop_{max_k_hops}.json")
@@ -69,6 +69,12 @@ def generate_curriculum_local(
             error_window += 1
             errors_total += 1
             pbar.write(f"[skip] batch generation failed: {e}")
+            continue
+
+        if not candidates:
+            error_window += 1
+            errors_total += 1
+            pbar.write("[skip] No valid paths found in batch.")
             continue
 
         # --- Step 2: quality filter (structural, no LLM call) ---
