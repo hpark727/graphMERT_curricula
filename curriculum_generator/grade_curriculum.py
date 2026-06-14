@@ -84,6 +84,7 @@ def grade_curriculum(
         dtype='bfloat16',
         download_dir=hf_cache_dir,
         max_model_len=max_model_len,
+        trust_remote_code=True,
     )
     tokenizer = llm.get_tokenizer()
     print("Model loaded.")
