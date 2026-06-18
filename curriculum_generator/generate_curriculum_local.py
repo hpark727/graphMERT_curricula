@@ -26,9 +26,11 @@ def generate_curriculum_local(
     hf_cache_dir: str = None,
     batch_size: int = 32,
     error_threshold: int = 50,
+    output_file: str = None,
 ) -> None:
 
-    output_file = os.path.join(output_dir, f"curriculum_dataset_hop_{max_k_hops}.json")
+    if output_file is None:
+        output_file = os.path.join(output_dir, f"curriculum_dataset_hop_{max_k_hops}.json")
     dataset = []
     question_idx = 0
 
@@ -45,6 +47,17 @@ def generate_curriculum_local(
         domain=domain,
         hf_cache_dir=hf_cache_dir,
     )
+
+    # Seed both vocab_freq and path_counts from the existing dataset so that
+    # node-level and path-level inverse-frequency sampling account for all prior questions.
+    path_counts: dict = {}
+    for entry in dataset:
+        key = tuple((p['start'], p['relation'], p['end']) for p in entry['paths'])
+        path_counts[key] = path_counts.get(key, 0) + 1
+        for path in entry['paths']:
+            if path['start'] in qa_gym.generator.vocab_freq:
+                qa_gym.generator.vocab_freq[path['start']] += 1
+    print(f"Initialized path_counts with {len(path_counts)} unique paths from {len(dataset)} existing questions")
 
     error_window = 0
     errors_total = 0
@@ -77,18 +90,24 @@ def generate_curriculum_local(
             pbar.write("[skip] No valid paths found in batch.")
             continue
 
-        # --- Step 2: quality filter (structural, no LLM call) ---
+        # --- Step 2: quality filter (structural) + path-level inverse frequency sampling ---
         quality_passed = []
         for q in candidates:
             if question_idx + len(quality_passed) >= num_questions:
                 break
             try:
-                if qa_gym.quality_filtering(q['question']):
-                    quality_passed.append(q)
-                else:
+                if not qa_gym.quality_filtering(q['question']):
                     error_window += 1
                     errors_total += 1
                     pbar.write("[skip] Quality filtering failed.")
+                    continue
+                path_key = tuple((p['start'], p['relation'], p['end']) for p in q['paths'])
+                count = path_counts.get(path_key, 0)
+                if random.random() >= 1.0 / (count + 1):
+                    pbar.write(f"[skip] Path downsampled (seen {count}x).")
+                    continue
+                q['_path_key'] = path_key
+                quality_passed.append(q)
             except Exception as e:
                 error_window += 1
                 errors_total += 1
@@ -146,6 +165,7 @@ def generate_curriculum_local(
 
             for path in q['paths']:
                 qa_gym.generator.vocab_freq[path['start']] += 1
+            path_counts[q['_path_key']] = path_counts.get(q['_path_key'], 0) + 1
 
             question_idx += 1
             error_window = 0
@@ -159,6 +179,9 @@ def generate_curriculum_local(
                     json.dump(dataset, f, indent=2)
                 with open(os.path.join(output_dir, "nodes_freq.json"), 'w') as f:
                     json.dump(qa_gym.generator.vocab_freq, f, indent=2)
+                # path_counts keys are tuples; serialize as lists for JSON
+                with open(os.path.join(output_dir, "path_counts.json"), 'w') as f:
+                    json.dump({str(k): v for k, v in path_counts.items()}, f, indent=2)
                 pbar.write(f"[checkpoint] {question_idx} questions saved.")
 
     pbar.close()
@@ -173,6 +196,8 @@ def main():
     parser.add_argument("--max_k_hops", type=int, default=3)
     parser.add_argument("--num_questions", type=int, default=20000)
     parser.add_argument("--output_dir", type=str, default="/scratch/gpfs/$USER/curriculum_training_data/")
+    parser.add_argument("--output_file", type=str, default=None,
+                        help="Override default output filename (default: output_dir/curriculum_dataset_hop_N.json)")
     parser.add_argument("--model_name", type=str, default="google/gemma-3-27b-it")
     parser.add_argument("--tensor_parallel_size", type=int, default=2)
     parser.add_argument("--domain", type=str, default="computer networking")
@@ -191,6 +216,7 @@ def main():
         domain=args.domain,
         hf_cache_dir=args.hf_cache_dir,
         batch_size=args.batch_size,
+        output_file=args.output_file,
     )
 
 
