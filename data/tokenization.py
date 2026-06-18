@@ -36,12 +36,13 @@ def ApplyTemplate(question_item, tokenizer):
 
 def main(args):
     # load tokenizer from cache
-    tokenizer = AutoTokenizer.from_pretrained("Qwen/QwQ-32B", cache_dir='/projects/JHA/.cache/huggingface/hub')
+    hf_cache = os.environ.get('HF_HOME', None)
+    tokenizer = AutoTokenizer.from_pretrained("google/gemma-3-27b-it", cache_dir=hf_cache)
     with open(args.dataset_train_path, "r") as f:
         questions_train = json.load(f)
 
     questions_dict = {
-            'category': [question['category'] for question in questions_train],
+            'k_hops': [question['k_hops'] for question in questions_train],
             'source_concept': [question['source_concept'] for question in questions_train],
             'target_concept': [question['target_concept'] for question in questions_train],
             'paths': [question['paths'] for question in questions_train],

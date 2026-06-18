@@ -27,7 +27,7 @@ echo "Head node IP: $head_node_ip"
 
 conda activate bottom_up_SI
 
-run_name="qwq_32b_curriculum_training_data_bs16_lr1e-5_epoch8_wd1e-4_$(date +%Y%m%d_%H%M%S)"
+run_name="gemma_27b_curriculum_training_data_bs16_lr1e-5_epoch8_wd1e-4_$(date +%Y%m%d_%H%M%S)"
 torchrun \
     --nnodes=$nnodes \
     --nproc_per_node=$gpu_count \
@@ -40,12 +40,12 @@ torchrun \
     --per_device_eval_batch_size=1 \
     --gradient_accumulation_steps=${grad_acc} \
     --num_train_epochs=8 \
-    --train_dataset_path="/curriculum_training_data/tokenized_curriculum_dataset_hop_3_decontaminated/" \
-    --model_name=Qwen/QwQ-32B \
+    --train_dataset_path="/curriculum_training_data/tokenized_curriculum_dataset_hop_1_2_decontaminated/" \
+    --model_name=google/gemma-3-27b-it \
     --warmup_ratio=0.05 \
     --report_to="wandb" \
     --fsdp="full_shard auto_wrap" \
-    --fsdp_config="fsdp_config_qwen.json" \
+    --fsdp_config="fsdp_config_gemma.json" \
     --bf16=True \
     --save_strategy="no" \
     --eval_strategy="no" \

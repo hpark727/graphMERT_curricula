@@ -1,0 +1,4 @@
+{
+    "transformer_layer_cls_to_wrap": "Gemma3DecoderLayer",
+    "cpu_ram_efficient_loading": true
+}

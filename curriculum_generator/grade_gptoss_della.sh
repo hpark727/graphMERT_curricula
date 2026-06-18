@@ -1,22 +1,22 @@
 #!/bin/bash
-#SBATCH --job-name=grade_gptoss
-#SBATCH --output=/scratch/gpfs/JHA/hp9084/curricula_gen/logs/grade_gptoss_%j.out
-#SBATCH --error=/scratch/gpfs/JHA/hp9084/curricula_gen/logs/grade_gptoss_%j.err
+#SBATCH --job-name=grade_llama31
+#SBATCH --output=/scratch/gpfs/JHA/hp9084/curricula_gen/logs/grade_llama31_%j.out
+#SBATCH --error=/scratch/gpfs/JHA/hp9084/curricula_gen/logs/grade_llama31_%j.err
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --gres=gpu:2
-#SBATCH --constraint=gpu40
+#SBATCH --constraint=gpu80
 #SBATCH --mem=64G
 #SBATCH --time=4:00:00
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --mail-user=                  # fill in your princeton email
 
 # ---- user config --------------------------------------------------------
-MODEL="openai/gpt-oss-20b"
-GRADER_NAME="gptoss"
+MODEL="meta-llama/Llama-3.1-70B-Instruct"
+GRADER_NAME="llama31"
 TENSOR_PARALLEL=2
-BATCH_SIZE=128                        # 20B is smaller, fits larger batches
+BATCH_SIZE=32
 MAX_MODEL_LEN=8192
 
 REPO_DIR="/scratch/gpfs/JHA/hp9084/curricula_gen"

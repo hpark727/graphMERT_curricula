@@ -32,11 +32,11 @@ from torch.distributed.fsdp import (
 
 @dataclass
 class TrainingConfig:
-    model_name: str = field(default="Qwen/QwQ-32B")
+    model_name: str = field(default="google/gemma-3-27b-it")
     block_size: int = field(default=32768)
     wandb_project: str = field(default="sft_kg")
     wandb_dir: str = field(default="/wandb_logs")
-    train_dataset_path: str = field(default="/curriculum_training_data/tokenized_curriculum_dataset_hop_3_decontaminated/")
+    train_dataset_path: str = field(default="/curriculum_training_data/tokenized_curriculum_dataset_hop_1_2_decontaminated/")
     dagger: bool = field(default=False)
     use_lora: bool = field(default=False)
     lora_r: int = field(default=16)
@@ -60,6 +60,7 @@ def train():
 
     model = transformers.AutoModelForCausalLM.from_pretrained(config.model_name)
     # Load model with LoRA config if enabled
+    lora_config = None
     if config.use_lora:
         # Prepare model for LoRA
         lora_config = LoraConfig(
@@ -81,12 +82,11 @@ def train():
        
     dataset = load_from_disk(config.train_dataset_path)
     # setting up trainer
-    tokenizer = transformers.AutoTokenizer.from_pretrained(model_path, use_fast=True)
+    tokenizer = transformers.AutoTokenizer.from_pretrained(config.model_name, use_fast=True)
 
-    instruction_template = "<|im_start|>user\n"
-    response_template = "<|im_start|>assistant\n"
-    # Use a token that is never used
-    tokenizer.add_special_tokens({'pad_token': '<|fim_pad|>'})
+    instruction_template = "<start_of_turn>user\n"
+    response_template = "<start_of_turn>model\n"
+    tokenizer.pad_token = tokenizer.eos_token
     # Only compute loss over assistant responses
     collator = trl.DataCollatorForCompletionOnlyLM(
         response_template=response_template,
