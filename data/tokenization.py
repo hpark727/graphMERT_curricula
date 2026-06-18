@@ -36,8 +36,7 @@ def ApplyTemplate(question_item, tokenizer):
 
 def main(args):
     # load tokenizer from cache
-    hf_cache = os.environ.get('HF_HOME', None)
-    tokenizer = AutoTokenizer.from_pretrained("google/gemma-3-27b-it", cache_dir=hf_cache)
+    tokenizer = AutoTokenizer.from_pretrained("google/gemma-3-27b-it")
     with open(args.dataset_train_path, "r") as f:
         questions_train = json.load(f)
 
