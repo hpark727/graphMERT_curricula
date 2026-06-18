@@ -15,19 +15,24 @@ import random
 import os
 
 def ApplyTemplate(question_item, tokenizer):
-    question = question_item['question_and_explanation'].split('<Question>')[1].split('</Question>')[0]
-    options = question_item['question_and_explanation'].split('<Options>')[1].split('</Options>')[0]
-    #randomly select one option letter for the answer instruction from A. B. C. and D.
+    qae = question_item['question_and_explanation']
+    required_tags = ['<Question>', '</Question>', '<Options>', '</Options>',
+                     '<Explanation>', '</Explanation>', '<Answer>:', '</Answer>']
+    if any(tag not in qae for tag in required_tags):
+        return dict(text=None)
+
+    question = qae.split('<Question>')[1].split('</Question>')[0]
+    options = qae.split('<Options>')[1].split('</Options>')[0]
     answer_option = random.choice(['A', 'B', 'C', 'D'])
     answer_instruction = 'Please only output the choice letter in the answer field e.g. Final Answer: ' + answer_option
     prompt = question + '\nOptions:' + options + '\n' + answer_instruction
-    cot = question_item['question_and_explanation'].split('<Explanation>')[1].split('</Explanation>')[0]
-    answer = question_item['question_and_explanation'].split('<Answer>:')[1].split('</Answer>')[0]
+    cot = qae.split('<Explanation>')[1].split('</Explanation>')[0]
+    answer = qae.split('<Answer>:')[1].split('</Answer>')[0]
 
     text = tokenizer.apply_chat_template([
         {"role": "user", "content": prompt.strip()},
         {
-            "role": "assistant", 
+            "role": "assistant",
             "content": "<think>\n" + cot.strip() + "\n</think>\nFinal Answer: " + answer.strip()
         }
     ], tokenize=False)
@@ -49,6 +54,9 @@ def main(args):
     }
     dataset = datasets.Dataset.from_dict(questions_dict)
     dataset = dataset.map(partial(ApplyTemplate, tokenizer=tokenizer))
+    n_before = len(dataset)
+    dataset = dataset.filter(lambda x: x['text'] is not None)
+    print(f"Filtered {n_before - len(dataset)} malformed entries. Remaining: {len(dataset)}")
     dataset_w_split = datasets.DatasetDict({'train': dataset})
     # display the first 5 examples
     for i in range(5):
