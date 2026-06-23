@@ -87,30 +87,18 @@ def generate_test_set(output_path, llm_backend, path_generator, num_per_hop,
             except Exception:
                 parsed.append(None)
 
-        # --- thinking traces ---
-        valid_parsed = [(i, p) for i, p in enumerate(parsed) if p is not None]
-        if valid_parsed:
-            trace_inputs = [{"question": p["question"], "paths": p["paths"]}
-                            for _, p in valid_parsed]
-            traces = llm_backend.generate_thinking_traces_batch(trace_inputs)
-            for (i, _), trace in zip(valid_parsed, traces):
-                if trace:
-                    parsed[i]["cot"] = trace
-
-        # --- collect (no correctness filter — GPT grades everything) ---
+        # --- collect (thinking traces generated separately by GPT-OSS) ---
         for p in parsed:
-            if p is None or "cot" not in p:
+            if p is None:
                 continue
-            combined = llm_backend.combine_question_and_thinking_trace_with_answer(
-                p["question"], p["cot"], p["answer"]
-            )
             results.append({
                 "id": next_id,
                 "k_hops": p["k_hops"],
                 "source_concept": p["source_concept"],
                 "target_concept": p["target_concept"],
                 "paths": p["paths"],
-                "question_and_explanation": combined,
+                "question": p["question"],
+                "answer": p["answer"],
             })
             next_id += 1
 
@@ -125,9 +113,9 @@ def generate_test_set(output_path, llm_backend, path_generator, num_per_hop,
         json.dump(results, f, indent=2)
 
     hop_summary = {k: sum(1 for r in results if r["k_hops"] == k) for k in hop_counts}
-    print(f"\nSaved {len(results)} ungraded test questions to {output_path}")
+    print(f"\nSaved {len(results)} question-only test entries to {output_path}")
     print(f"Per-hop breakdown: {hop_summary}")
-    print("Next: run grade_curriculum_tinker.py to get GPT-OSS-120b verdicts.")
+    print("Next: run generate_thinking_traces_tinker.py to add GPT-OSS thinking traces and grade.")
 
 
 def main():

@@ -123,30 +123,18 @@ def generate_redundant(uncovered, output_path, llm, batch_size, num_per_triple):
             except Exception:
                 parsed.append(None)
 
-        # --- thinking traces for valid questions ---
-        valid = [(i, p) for i, p in enumerate(parsed) if p is not None]
-        if valid:
-            trace_inputs = [{"question": p["question"], "paths": p["paths"]}
-                            for _, p in valid]
-            traces = llm.generate_thinking_traces_batch(trace_inputs)
-            for (i, _), trace in zip(valid, traces):
-                if trace:
-                    parsed[i]["cot"] = trace
-
-        # --- collect results (no correctness filter — GPT grades everything) ---
+        # --- collect results (thinking traces generated separately by GPT-OSS) ---
         for item_parsed in parsed:
-            if item_parsed is None or "cot" not in item_parsed:
+            if item_parsed is None:
                 continue
-            combined = llm.combine_question_and_thinking_trace_with_answer(
-                item_parsed["question"], item_parsed["cot"], item_parsed["answer"]
-            )
             results.append({
                 "id": next_id,
                 "k_hops": 1,
                 "source_concept": item_parsed["source_concept"],
                 "target_concept": item_parsed["target_concept"],
                 "paths": item_parsed["paths"],
-                "question_and_explanation": combined,
+                "question": item_parsed["question"],
+                "answer": item_parsed["answer"],
             })
             next_id += 1
 
@@ -157,8 +145,8 @@ def generate_redundant(uncovered, output_path, llm, batch_size, num_per_triple):
     with open(output_path, "w") as f:
         json.dump(results, f, indent=2)
 
-    print(f"\nSaved {len(results)} ungraded candidates to {output_path}")
-    print("Next: run grade_curriculum_tinker.py to get GPT-OSS-120b verdicts.")
+    print(f"\nSaved {len(results)} question-only candidates to {output_path}")
+    print("Next: run generate_thinking_traces_tinker.py to add GPT-OSS thinking traces and grade.")
 
 
 def main():
