@@ -30,7 +30,7 @@ cd "$REPO_DIR"
 
 python -m curriculum_generator.fill_coverage_gaps \
     --full_dataset  "$DATA_DIR/curriculum_dataset_hop_3.json" \
-    --verdicts      "$DATA_DIR/verdicts_gptoss120b.json" \
+    --verdicts      "$REPO_DIR/curriculum_generator/data/verdicts_gptoss120b.json" \
     --kg_triples    "$REPO_DIR/networks_kg/validated_triples.csv" \
     --output        "$DATA_DIR/curriculum_dataset_gap_fill.json" \
     --model_name    google/gemma-3-27b-it \
