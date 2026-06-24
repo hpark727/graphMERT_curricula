@@ -41,7 +41,7 @@ def ApplyTemplate(question_item, tokenizer):
 
 def main(args):
     # load tokenizer from cache
-    tokenizer = AutoTokenizer.from_pretrained("google/gemma-3-27b-it")
+    tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen3-14B")
     with open(args.dataset_train_path, "r") as f:
         questions_train = json.load(f)
 

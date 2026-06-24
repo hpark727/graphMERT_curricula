@@ -246,7 +246,7 @@ class TinkerLLMBackend:
         3. Eliminate each wrong option with a brief technical justification.
         4. Sound like a senior networking engineer explaining their thought process to a colleague.
         """
-        return self._generate(prompt, max_tokens=2048)
+        return self._generate(prompt, max_tokens=8192)
 
     def combine_question_and_thinking_trace_with_answer(self, question: str, explanation: str, answer: str) -> str:
         return f"{question}\n<Explanation>\n{explanation}\n</Explanation>\n<Answer>:\n{answer}\n</Answer>"
@@ -269,7 +269,7 @@ class TinkerLLMBackend:
         {question_answer_explanation}
         """
         try:
-            content = self._generate(prompt, max_tokens=20, temperature=0.0)
+            content = self._generate(prompt, max_tokens=512, temperature=0.0)
         except Exception as e:
             print(f"Error in correctness filtering: {e}")
             return "error"

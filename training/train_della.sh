@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=sft_gemma_27b
+#SBATCH --job-name=sft_qwen3_14b
 #SBATCH --output=/scratch/gpfs/JHA/hp9084/sft_training/logs/sft_%j.out
 #SBATCH --error=/scratch/gpfs/JHA/hp9084/sft_training/logs/sft_%j.err
 #SBATCH --nodes=1
@@ -14,7 +14,7 @@
 
 # ---- user config --------------------------------------------------------
 REPO_DIR="/scratch/gpfs/JHA/hp9084/curricula_gen"
-DATASET_PATH="/scratch/gpfs/JHA/hp9084/curricula_gen/output/tokenized_curriculum_dataset_hop_1_2_decontaminated"
+DATASET_PATH="/scratch/gpfs/JHA/hp9084/curricula_gen/output/tokenized_curriculum_dataset_final"
 CHECKPOINT_DIR="/scratch/gpfs/JHA/hp9084/sft_training/checkpoints"
 HF_CACHE="/scratch/gpfs/JHA/hp9084/curricula_gen/.cache/huggingface"
 # -------------------------------------------------------------------------
@@ -45,7 +45,7 @@ gpu_count=$(nvidia-smi -L | wc -l)
 batch_size=16
 grad_acc=$(($batch_size / ($gpu_count * $nnodes)))
 
-run_name="gemma_27b_sft_hop1_2_bs${batch_size}_lr1e-5_epoch8_$(date +%Y%m%d_%H%M%S)"
+run_name="qwen3_14b_sft_final_bs${batch_size}_lr1e-5_epoch8_$(date +%Y%m%d_%H%M%S)"
 
 echo "Nodes: $nnodes | GPUs/node: $gpu_count | Grad acc: $grad_acc | Run: $run_name"
 
@@ -56,7 +56,7 @@ torchrun \
     --rdzv_backend=c10d \
     --rdzv_endpoint=$head_node_ip:29500 \
     "$REPO_DIR/training/trainer.py" \
-    --model_name=google/gemma-3-27b-it \
+    --model_name=Qwen/Qwen3-14B \
     --block_size=32768 \
     --per_device_train_batch_size=1 \
     --per_device_eval_batch_size=1 \
@@ -66,7 +66,7 @@ torchrun \
     --warmup_ratio=0.05 \
     --report_to="wandb" \
     --fsdp="full_shard auto_wrap" \
-    --fsdp_config="$REPO_DIR/training/fsdp_config_gemma.json" \
+    --fsdp_config="$REPO_DIR/training/fsdp_config_qwen.json" \
     --bf16=True \
     --save_strategy="no" \
     --eval_strategy="no" \

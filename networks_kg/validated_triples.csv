@@ -105,13 +105,11 @@ wifi,operates_at,link layer,yes,yes
 router,receives,data packet,yes,yes
 wifi,operates_at,access layer,,yes
 dsl,supports,network,yes,yes
-dsl,supports,access,yes,yes
 end system,sends,the other system,yes,no
 fiber optics,connects_to,network,,yes
 fiber optics,connects_to,access network,,yes
 fiber optics,connects_to,link,,yes
 fiber optics,connects_to,gateway,no,yes
-end system,connects_to,network,yes,yes
 end system,connects_to,destination end system,yes,yes
 packet switch,connects_to,link,yes,yes
 packet switch,forwards,packets,yes,yes
@@ -130,10 +128,8 @@ router,connects_to,output link,yes,yes
 router,part_of,network,yes,yes
 router,has_part,input link,yes,yes
 router,has_part,output link,yes,no
-router,part_of,routing path,yes,yes
 router,communicates_with,client,yes,yes
 router,communicates_with,destination,,yes
-router,connects_to,destination,yes,no
 router,connects_to,source,no,yes
 router,sends,packet to destination,yes,yes
 router,sends,packet from input to output,,yes
@@ -168,7 +164,6 @@ packet,contains,header,yes,yes
 router,receives,packet from destination,yes,yes
 packet,contains,sequence number,,yes
 link,part_of,network,yes,yes
-link,part_of,the network,yes,yes
 link,provides,rate,no,yes
 link,provides,transmission,yes,yes
 link,supports,packet transmission,yes,yes
@@ -190,7 +185,6 @@ congestion,causes,output queue,,yes
 router,forwards,transmitted data,yes,yes
 router,communicates_with,host b,yes,yes
 congestion,causes,link collision,yes,no
-router,connects_to,destination node,yes,yes
 router,forwards,outgoing traffic,yes,yes
 router,receives,packet data,yes,yes
 router,has_part,output queue,yes,yes
@@ -218,12 +212,10 @@ router,receives,packet through gateway,yes,yes
 ip address,identifies,network device,yes,yes
 router,connects_to,gateway,yes,yes
 router,sends,to the host and to the gateway,yes,no
-router,connects_to,network,yes,yes
 router,forwards,data packet,yes,yes
 router,has_part,routing table,yes,yes
 router,is_a,gateway,yes,yes
 router,has_part,destination entry,yes,yes
-router,part_of,path,yes,yes
 forwarding table,part_of,network node,yes,yes
 router,receives,destination address,,yes
 router,forwards,destination packet,yes,yes
@@ -270,7 +262,6 @@ global transit isp,has_part,traffic connection,,yes
 global transit isp,has_part,bandwidth segment,no,yes
 global transit isp,has_part,link,yes,yes
 global transit isp,has_part,routing,yes,yes
-global transit isp,has_part,network,,yes
 regional isp,connects_to,core network,yes,yes
 global transit isp,has_part,access network,,yes
 regional isp,connects_to,tier hub,yes,no
@@ -287,7 +278,6 @@ global transit isp,has_part,traffic route,,yes
 access isp,connects_to,tier link,,yes
 router,part_of,home network,yes,yes
 access isp,part_of,tier network,,yes
-access isp,part_of,tier and access network,yes,no
 larger regional isp,connects_to,core network,yes,yes
 larger regional isp,connects_to,data hub,yes,yes
 larger regional isp,connects_to,tier network,,yes
@@ -338,7 +328,6 @@ transmission delay,increases,duration,no,yes
 transmission delay,increases,packet size,yes,no
 propagation delay,increases,time,no,yes
 router,receives,routing data,yes,yes
-propagation delay,increases,duration,no,yes
 propagation delay,increases,interval,yes,yes
 link,provides,bandwidth,yes,yes
 link,provides,transmission rate,no,yes
@@ -385,7 +374,6 @@ router,communicates_with,receiver,,yes
 server,connects_to,client,yes,yes
 server,connects_to,client connection,yes,no
 server,connects_to,network,yes,yes
-server,connects_to,link,yes,yes
 server,provides,data transfer,yes,yes
 server,provides,service rate,no,yes
 client,connects_to,network,yes,yes
@@ -498,7 +486,6 @@ connection flooding,is_a,network congestion,yes,no
 packet sniffer,receives,broadcast transmission,yes,yes
 link layer,sends,link - layer frame,yes,yes
 link layer,sends,link - layer data,yes,yes
-packet sniffer,receives,packets,yes,yes
 packet sniffer,receives,message,yes,yes
 link layer,sends,link - layer header and frame,yes,yes
 packet sniffer,receives,data,yes,yes
@@ -529,7 +516,6 @@ browser,communicates_with,network program,yes,yes
 browser,is_a,network application,yes,yes
 tcp,provides,traffic management,no,yes
 data center,contains,control system,yes,yes
-data center,enables,web server,no,yes
 data center,provides,network service,yes,yes
 data center,enables,remote server,no,yes
 data center,provides,server,no,yes
@@ -654,7 +640,6 @@ http,supports,client - server,yes,yes
 http,enables,browser client,yes,yes
 http,provides,packet transfer,no,yes
 http,supports,mail service,,yes
-http,supports,data transport,no,yes
 dns,provides,network service,yes,yes
 dns,provides,application service,yes,yes
 internet explorer,implements,web browser,yes,yes
@@ -674,7 +659,6 @@ tcp,provides,connection service,yes,yes
 http,runs_on,tc,yes,no
 tcp,provides,message checks,yes,yes
 http,provides,response,yes,yes
-http,provides,request response,yes,yes
 http,supports,message,yes,yes
 http,provides,message,no,yes
 http,supports,response,yes,yes
@@ -692,7 +676,6 @@ http,provides,header,yes,yes
 http,runs_on,protocol,yes,yes
 http,runs_on,socket,yes,yes
 http,enables,internet web,yes,yes
-http,enables,web page,yes,yes
 http,enables,server file,yes,yes
 http,supports,http response,yes,yes
 http,supports,http messages,yes,yes
@@ -724,7 +707,6 @@ http,supports,header,yes,yes
 http,supports,connection,yes,yes
 web server,provides,response data,yes,yes
 web server,implements,http response,no,yes
-web server,sends,message,yes,yes
 web server,sends,file,yes,yes
 request line,part_of,http request message,yes,yes
 web server,provides,client connection,no,yes
@@ -806,7 +788,6 @@ origin server,sends,http message,yes,yes
 origin server,receives,source address,no,yes
 web cache,communicates_with,client,yes,yes
 origin server,sends,the http message to client,yes,yes
-origin server,sends,http message to server,yes,no
 web cache,connects_to,network,yes,yes
 web cache,connects_to,client,yes,yes
 web cache,connects_to,remote server,yes,yes
@@ -904,7 +885,6 @@ smtp,provides,protocol service,yes,no
 smtp,provides,message notification,yes,no
 smtp,provides,data transfer,yes,yes
 http,supports,web request,yes,yes
-http,enables,data transfer,yes,yes
 http,enables,file transfer,yes,yes
 http,enables,message transfer,yes,yes
 http,enables,packet transfer,no,yes
@@ -918,7 +898,6 @@ http,supports,data bytes,yes,yes
 user agent,sends,a message,yes,yes
 user agent,sends,mail,yes,yes
 user agent,sends,the message,yes,yes
-mail server,receives,client request,yes,yes
 user agent,sends,the mail,yes,yes
 user agent,sends,a message to server,yes,yes
 mail server,has_part,message,no,yes
@@ -992,7 +971,6 @@ url,has_part,http address,yes,no
 dns server,communicates_with,mail server,yes,yes
 dns server,communicates_with,browser,yes,yes
 dns server,communicates_with,local host,yes,yes
-dns server,communicates_with,web server,no,yes
 dns server,contains,host address,yes,yes
 dns server,contains,ip address,yes,yes
 dns server,contains,cache,yes,yes
@@ -1261,7 +1239,6 @@ server,receives,message,yes,yes
 peer,receives,web request,yes,yes
 server,receives,peer request,yes,yes
 server,receives,request,yes,yes
-server,implements,file transfer,yes,yes
 server,sends,message,yes,yes
 server,implements,buffer queue,,yes
 server,implements,data transfer,,yes
@@ -1301,7 +1278,6 @@ data center,enables,network access,yes,yes
 data center,provides,service,yes,yes
 data center,contains,video data,yes,yes
 cdn,provides,service,yes,yes
-data center,contains,network service,yes,yes
 data center,contains,ip address,yes,yes
 cdn,provides,bandwidth,no,yes
 cdn,provides,network,,yes
@@ -1357,7 +1333,6 @@ client,has_part,port,no,yes
 client,receives,message,yes,yes
 client,requires,port,yes,yes
 client,receives,response,yes,yes
-client,requires,socket,yes,yes
 client,sends,a message,yes,yes
 client,sends,the request,yes,yes
 client,sends,the http request,yes,yes
@@ -1399,7 +1374,6 @@ server,implements,application layer,yes,yes
 server,implements,message transfer,yes,yes
 server,is_a,program,yes,yes
 server,is_a,application,yes,yes
-server,receives,client message,yes,yes
 server,sends,response,yes,yes
 server,receives,http request,yes,yes
 server,sends,http response,yes,yes
@@ -1637,7 +1611,6 @@ transport protocol,runs_on,system,yes,yes
 transport protocol,provides,message transfer,yes,yes
 network layer,enables,packet control,yes,yes
 transport protocol,provides,network service,no,yes
-transport protocol,runs_on,transport layer,,yes
 transport protocol,provides,communication service,yes,yes
 transport protocol,provides,reliable data transfer,yes,yes
 transport protocol,provides,congestion control service,yes,yes
@@ -1825,7 +1798,6 @@ dns,runs_on,the ud,yes,no
 dns,runs_on,"ud ,",yes,no
 udp,provides,data field,,yes
 dns,runs_on,ud,yes,no
-udp,provides,port,yes,yes
 udp,provides,header,no,yes
 udp,supports,data and header,yes,no
 udp,supports,ip address,yes,yes
@@ -1834,7 +1806,6 @@ udp,requires,header field,,yes
 udp,requires,host side,,yes
 udp segment,contains,header,yes,yes
 network layer,enables,header,,yes
-network layer,enables,data packet,yes,yes
 network layer,sends,the data,yes,no
 udp segment,contains,message,yes,yes
 udp segment,has_part,header,yes,yes
@@ -1866,7 +1837,6 @@ tcp,is_a,transport - layer,yes,yes
 tcp,receives,control segment,yes,yes
 tcp,has_part,window rate,yes,no
 tcp,requires,segment transfer,yes,yes
-tcp,requires,transport - layer,,yes
 tcp,requires,data service,,yes
 tcp,requires,connection checks,yes,yes
 tcp,runs_on,a network,no,yes
@@ -1949,7 +1919,6 @@ transport layer,implements,packet checks,yes,yes
 ip,provides,packet error checks,,yes
 transport layer,provides,reliable transfer,yes,yes
 transport layer,sends,application data,,yes
-ip,provides,data flow,yes,yes
 udp,supports,error check,yes,yes
 transport layer,implements,data correction,yes,yes
 udp,provides,transport layer,yes,yes
@@ -1988,7 +1957,6 @@ reliable data transfer protocol,requires,control packet delivery,yes,yes
 reliable data transfer protocol,requires,multiple packet delivery,,yes
 reliable data transfer protocol,requires,link layer service,,yes
 reliable data transfer protocol,has_part,packet header,yes,yes
-segment,contains,destination address,yes,no
 reliable data transfer protocol,has_part,flow control,,yes
 reliable data transfer protocol,requires,packet checks,yes,yes
 reliable data transfer protocol,has_part,window protocol,,yes
@@ -2045,7 +2013,6 @@ cumulative acknowledgment,is_a,packet,no,yes
 timer,supports,packet transmission,,yes
 timer,supports,data transfer,yes,yes
 timer,supports,message broadcast,yes,yes
-sequence number,identifies,byte,yes,yes
 tcp,has_part,data checks,no,yes
 tcp,receives,network packet,yes,yes
 tcp,sends,segments,yes,yes
@@ -2062,7 +2029,6 @@ tcp,sends,segment .,yes,yes
 tcp,implements,rate calculation,no,yes
 tcp,supports,bandwidth calculation,,yes
 tcp,sends,"segment , connection",yes,no
-tcp,receives,sequence number,,yes
 tcp,runs_on,the host,yes,yes
 tcp,sends,a segment with a header,yes,yes
 tcp,receives,client data,yes,yes
@@ -2074,7 +2040,6 @@ tcp,supports,data,yes,yes
 tcp,has_part,control window,yes,yes
 tcp,provides,data traffic,yes,yes
 tcp,receives,client connection,no,yes
-tcp,requires,client connection,no,yes
 tcp,receives,client segment,yes,yes
 tcp,sends,a message,yes,yes
 tcp,supports,service,no,yes
@@ -2101,7 +2066,6 @@ tcp,requires,buffer,yes,yes
 tcp,implements,connection buffer,no,yes
 network layer,sends,data from the connection,yes,no
 tcp,provides,traffic flow,yes,yes
-tcp,supports,data buffer,yes,yes
 ethernet,provides,data transmission,yes,yes
 tcp segment,contains,data field,,yes
 ethernet,provides,frame header,yes,yes
@@ -2123,7 +2087,6 @@ tcp,supports,sequence field,yes,yes
 tcp,implements,segment header,no,yes
 tcp,provides,packet checks,yes,yes
 tcp,supports,sequence number,yes,yes
-tcp,receives,the sequence number,,yes
 tcp,receives,the packet,,yes
 tcp,requires,header,yes,yes
 tcp,sends,segment number,yes,yes
@@ -2200,7 +2163,6 @@ tcp,receives,data transmission,no,yes
 tcp,sends,packets,yes,yes
 tcp,requires,congestion avoidance,,yes
 tcp,requires,rate control,,yes
-tcp,requires,segment calculation,no,yes
 tcp,sends,packet,,yes
 tcp,sends,a packet,yes,yes
 ethernet,provides,bandwidth efficiency,yes,yes
@@ -2229,7 +2191,6 @@ tcp,sends,segment from the host,yes,yes
 tcp,supports,error check,yes,yes
 acknowledgment,enables,window,yes,yes
 receive window,enables,data byte,no,yes
-acknowledgment,enables,data,yes,yes
 receive window,enables,segment rate,,yes
 udp,requires,buffer,yes,yes
 socket,receives,message,yes,yes
@@ -2324,8 +2285,6 @@ tcp,supports,packet avoidance,yes,no
 tcp,requires,protocol header,yes,yes
 tcp,receives,congestion packet,no,yes
 tcp,sends,a congestion packet,no,yes
-tcp segment,contains,sequence number,yes,yes
-timeout,causes,send rate,no,yes
 timeout,causes,congestion event,no,yes
 timeout,causes,delay time,,yes
 tcp,sends,"packet , segment",yes,no
@@ -2497,7 +2456,6 @@ quic,runs_on,network protocol,yes,yes
 quic,implements,error detection,yes,yes
 quic,supports,control channel,,yes
 tcp,receives,application layer,yes,yes
-quic,operates_at,transport,yes,yes
 tcp,sends,control data,yes,yes
 quic,supports,http message,yes,yes
 udp segment,contains,protocol header,yes,yes
@@ -2564,7 +2522,6 @@ timeout,causes,congestion window size,,yes
 triple duplicate ack,causes,congestion window,yes,yes
 triple duplicate ack,causes,window size,yes,yes
 triple duplicate ack,causes,transmission delay,no,yes
-slow start,part_of,tc congestion control,yes,yes
 tcp,sends,a window of the connection,yes,yes
 tcp,sends,the sequence of a segment,,yes
 tcp cubic,implements,data transfer,no,yes
@@ -2661,7 +2618,6 @@ transport layer,provides,protocol service,yes,yes
 router,implements,routing and forward,yes,yes
 router,implements,forward,yes,yes
 router,has_part,network route,,yes
-router,implements,forward through each input,yes,no
 router,implements,routing between multiple path,yes,yes
 router,operates_at,routing layer,,yes
 router,requires,routing table,yes,yes
@@ -2697,7 +2653,6 @@ forwarding table,contains,entry,yes,yes
 router,receives,the routing table,no,yes
 router,receives,the route,no,yes
 forwarding table,contains,route entry,yes,yes
-forwarding table,contains,output port,yes,yes
 forwarding table,contains,destination address,yes,yes
 router,requires,forward table,yes,yes
 forwarding table,part_of,output table,yes,no
@@ -2713,7 +2668,6 @@ routing protocol,enables,routing,yes,yes
 control plane,implements,traffic flow,yes,no
 routing protocol,enables,information,no,yes
 routing protocol,enables,network,yes,yes
-routing protocol,enables,traffic,yes,yes
 routing messages,contains,routing table,yes,no
 routing messages,contains,ip address,yes,yes
 routing messages,contains,header fields,yes,yes
@@ -2748,7 +2702,6 @@ router,implements,input switching,yes,yes
 router,implements,output control,yes,yes
 router,implements,congestion control,yes,yes
 router,implements,destination routing,,yes
-router,implements,route table,no,yes
 router,requires,packet forwarding,yes,yes
 ipv6,enables,addressing,yes,yes
 router,sends,packet from input,no,yes
@@ -2757,8 +2710,6 @@ ipv6,enables,ip addressing,no,yes
 ipv6,enables,packet routing,yes,yes
 ipv6,provides,ip addresses,yes,yes
 ipv6,provides,routing service,,yes
-input port,connects_to,output port,yes,yes
-input port,connects_to,switch,no,yes
 packet switch,has_part,routing table,yes,yes
 input port,connects_to,controller,no,yes
 packet switch,has_part,input link,,yes
@@ -2837,7 +2788,6 @@ output port,connects_to,gateway,,yes
 switch,forwards,network traffic,yes,yes
 input port,connects_to,cross switch,yes,no
 input port,connects_to,control interface,yes,no
-switch,has_part,congestion avoidance,no,yes
 input port,has_part,input queue,yes,yes
 input port,connects_to,forward table,yes,no
 input port,part_of,network node,yes,yes
@@ -2854,7 +2804,6 @@ routing processor,receives,ip packet,yes,yes
 output port,connects_to,switch,no,yes
 output port,part_of,switch,yes,yes
 output port,forwards,ip packet,yes,yes
-output port,forwards,data,yes,yes
 output port,part_of,gateway,yes,yes
 routing processor,requires,network layer,,yes
 output port,connects_to,cross port,yes,no
@@ -2881,7 +2830,6 @@ forwarding table,contains,port number,yes,yes
 output port,sends,source packet,,yes
 output port,sends,the packet,yes,yes
 router,implements,packet switching,yes,yes
-router,forwards,output link,yes,no
 router,receives,routing table entry,,yes
 router,receives,ip packet,yes,yes
 router,has_part,address entry,yes,yes
@@ -2901,7 +2849,6 @@ switching fabric,part_of,switch,yes,yes
 switching fabric,connects_to,link layer,,yes
 output port,connects_to,interface,,yes
 output port,forwards,ip packets,yes,yes
-output port,forwards,packets,yes,yes
 output port,has_part,switching interface,,yes
 output port,has_part,port controller,yes,yes
 output port,forwards,destination traffic,yes,yes
@@ -2985,7 +2932,6 @@ output port,receives,packet to the destination,yes,yes
 packet queue,part_of,node,yes,yes
 packet queue,part_of,link,,yes
 output port,sends,a packet,yes,yes
-output port,sends,packet from source,yes,yes
 buffering,increases,congestion,yes,yes
 buffering,increases,queue delay,,yes
 home router,has_part,packet queue,yes,yes
@@ -3015,7 +2961,6 @@ ipv4 header,contains,header field,yes,yes
 ipv4 header,contains,service field,yes,yes
 explicit congestion notification,part_of,ip header,yes,yes
 datagram length,part_of,ip header,yes,yes
-explicit congestion notification,part_of,network layer,yes,yes
 datagram length,part_of,network layer,,yes
 ip datagram,contains,ip address,yes,yes
 datagram length,part_of,transport layer,,yes
@@ -3025,7 +2970,6 @@ ip datagram,contains,data,yes,yes
 ip datagram,contains,field,yes,yes
 ip datagram,contains,protocol number,yes,yes
 ip datagram,contains,data segment,yes,yes
-ip datagram,contains,bytes,yes,yes
 ip datagram,contains,transport layer,,yes
 flags,part_of,ip header,yes,yes
 flags,part_of,ip packet,yes,yes
@@ -3047,7 +2991,6 @@ ipv6,enables,multiple addresses,yes,yes
 ipv6,has_part,packet,no,yes
 ipv6,enables,routing protocol,no,yes
 ipv6,provides,header field,no,yes
-ipv6,enables,routing policy,,yes
 ipv6,provides,service,yes,yes
 ipv6,enables,header field,no,yes
 udp,supports,checks data,yes,no
@@ -3080,7 +3023,6 @@ broadcast link,connects_to,network,,yes
 broadcast link,connects_to,interface,yes,yes
 broadcast link,connects_to,gateway,,yes
 subnet,has_part,address,yes,yes
-router interface,part_of,network,yes,no
 router interface,part_of,sub network,,yes
 router interface,part_of,ip network,no,yes
 router interface,part_of,routing of network,yes,no
@@ -3118,7 +3060,6 @@ dhcp,runs_on,host,,yes
 dhcp,provides,host address,yes,yes
 dhcp,provides,address information,yes,yes
 dhcp,runs_on,server,yes,yes
-dhcp,provides,route information,yes,yes
 dhcp,runs_on,network,,yes
 dhcp,runs_on,ip,yes,yes
 dhcp,enables,client address,yes,yes
@@ -3143,7 +3084,6 @@ dhcp server,receives,dh message,,yes
 dhcp server,receives,the client,yes,yes
 dhcp offer message,contains,header,yes,yes
 dhcp offer message,contains,server data,yes,yes
-dhcp server,receives,source address,,yes
 dhcp server,sends,ip address,yes,yes
 dhcp server,sends,source address,,yes
 nat router,has_part,route table,yes,yes
@@ -3166,7 +3106,6 @@ ipv6,provides,ip protocol,yes,no
 ipv6 datagram,contains,header,yes,yes
 ipv6,has_part,address field,yes,yes
 ipv6 datagram,contains,destination address,yes,yes
-ipv6,provides,header,yes,yes
 ipv6 datagram,contains,protocol number,yes,yes
 ipv6,provides,packet,no,yes
 ipv6 datagram,contains,data segment,yes,yes
@@ -3216,7 +3155,6 @@ hop limit,part_of,packet header,yes,yes
 hop limit,part_of,network layer,,yes
 hop limit,part_of,ip header,yes,yes
 ipv6,provides,address field,yes,yes
-next header,part_of,ip header,yes,yes
 ipv6,provides,protocol header,,yes
 ipv6,provides,data forward,yes,yes
 next header,identifies,protocol field,,yes
@@ -3247,7 +3185,6 @@ flow table entry,contains,forward action,yes,yes
 flow table entry,contains,destination address,yes,yes
 flow table entry,contains,output port,yes,yes
 output port,sends,packet from source port,yes,yes
-output port,sends,packet to destination port,,yes
 output port,receives,flow,yes,no
 ingress port,part_of,switch,yes,yes
 output port,sends,packet to output ports,yes,no
@@ -3278,7 +3215,6 @@ input port,supports,network traffic,,yes
 input port,requires,forward table,yes,yes
 forwarding table,contains,routing value,,yes
 output port,connects_to,cross link,yes,yes
-output port,connects_to,switching interface,,yes
 output port,receives,data,no,yes
 dhcp,enables,data packet,,yes
 forwarding table,contains,header field,,yes
@@ -3295,7 +3231,6 @@ router,implements,forward packet,yes,yes
 forwarding table,part_of,the switch,yes,yes
 forwarding table,part_of,the node,no,yes
 forwarding table,contains,prefix value,yes,yes
-forwarding table,contains,interface,,yes
 forwarding table,contains,route,yes,yes
 forwarding table,contains,address number,yes,yes
 router,implements,ip route,,yes
@@ -3324,7 +3259,6 @@ bgp,implements,routing protocol,no,yes
 bgp,requires,control plane,no,yes
 bgp,requires,network layer,,yes
 bgp,requires,routing information,yes,yes
-ospf,implements,information routing,yes,yes
 ospf,provides,traffic management,no,yes
 ospf,implements,ip route,yes,yes
 bgp,enables,routing,yes,yes
@@ -3352,7 +3286,6 @@ forwarding table,part_of,device,yes,yes
 flow table,contains,flow entry,yes,yes
 forwarding table,part_of,layer,yes,no
 flow table,has_part,packet field,yes,yes
-forwarding table,contains,output path,yes,yes
 flow table,contains,output port,,yes
 ospf,implements,reliable routing,yes,yes
 forwarding table,contains,link cost,no,yes
@@ -3423,7 +3356,6 @@ bgp,requires,routing algorithm,yes,yes
 ls algorithm,provides,node cost,,yes
 ls algorithm,provides,minimum cost,,yes
 forwarding table,contains,destination node,no,yes
-ls algorithm,provides,distance to node,,yes
 forwarding table,contains,path cost,no,yes
 ls algorithm,provides,routing table,yes,yes
 ls algorithm,provides,minimum cost path,yes,yes
@@ -3482,12 +3414,10 @@ router,causes,routing,no,yes
 router,implements,routing algorithm,yes,yes
 router,sends,the route to a gateway,yes,no
 router,implements,forward packets,yes,yes
-router,part_of,routing network,yes,yes
 router,implements,multiple paths,yes,no
 router,implements,routing tables,yes,no
 router,implements,route tables,,yes
 router,part_of,network of node,yes,yes
-router,part_of,routing path through network,yes,yes
 router,provides,routing paths,yes,yes
 router,receives,routing path,no,yes
 isp,provides,traffic management,yes,yes
@@ -3546,15 +3476,12 @@ bgp,enables,destination path,yes,yes
 bgp,has_part,destination address,,yes
 bgp,enables,network address,,yes
 bgp,has_part,routing table,yes,yes
-bgp,requires,address information,yes,yes
 bgp,requires,routing policy,yes,yes
 bgp,requires,network path,yes,yes
 bgp,requires,packet header,yes,yes
 bgp,runs_on,ip,yes,no
 forwarding table,contains,network address,yes,yes
-forwarding table,contains,destination prefix,no,yes
 bgp,enables,path vector,,yes
-bgp,enables,address information,yes,yes
 bgp,has_part,routing path,,yes
 bgp,implements,ip route,yes,no
 bgp,implements,control message,yes,no
@@ -3610,7 +3537,6 @@ bgp,enables,output information,no,yes
 bgp,enables,route algorithm,yes,yes
 bgp,implements,route avoidance,yes,yes
 bgp,has_part,routing algorithm,yes,yes
-bgp,requires,congestion window,,yes
 bgp,has_part,route path,no,yes
 cdn,supports,servers,yes,yes
 cdn,supports,ip protocol,yes,yes
@@ -3638,7 +3564,6 @@ bgp,enables,network information,yes,yes
 bgp,implements,traffic routing,yes,yes
 bgp,requires,route,yes,yes
 bgp,requires,address table,yes,yes
-bgp,requires,ip route,yes,yes
 flow table,part_of,network,yes,yes
 control plane,has_part,routing protocol,,yes
 sdn controller,communicates_with,network control application,,yes
@@ -3654,7 +3579,6 @@ sdn controller,implements,control protocol,yes,yes
 sdn controller,enables,remote control,yes,yes
 sdn controller,part_of,network management system,yes,yes
 sdn controller,implements,routing protocol,,yes
-sdn controller,implements,congestion control,yes,yes
 sdn controller,provides,network management,yes,yes
 sdn controller,provides,control,yes,yes
 sdn controller,implements,error checks,yes,yes
@@ -3717,7 +3641,6 @@ opendaylight,is_a,management layer,,yes
 sdn controller,communicates_with,device,,yes
 sdn controller,enables,protocol management,yes,yes
 sdn controller,enables,congestion control,yes,yes
-sdn controller,communicates_with,protocol,no,yes
 sdn controller,enables,routing protocol,no,yes
 sdn controller,implements,sd control,yes,no
 sdn controller,enables,traffic routing,yes,yes
@@ -3835,7 +3758,6 @@ netconf,requires,device,yes,yes
 netconf,supports,network service,yes,yes
 managing server,receives,message,yes,yes
 netconf,supports,message control,yes,no
-managing server,receives,client request,yes,yes
 managing server,receives,connection,yes,yes
 client,receives,network message,yes,yes
 managing server,sends,data to device,yes,no
@@ -3987,7 +3909,6 @@ link,connects_to,station,yes,yes
 link,connects_to,segment,,yes
 ethernet,implements,data transmission,yes,yes
 frame,contains,mac protocol,,yes
-link,connects_to,end destination,no,yes
 ethernet,has_part,data packet,no,yes
 ethernet,supports,frame transmission,yes,yes
 ethernet,supports,broadcast mode,yes,yes
@@ -4004,7 +3925,6 @@ network adapter,implements,link layer,yes,yes
 network adapter,implements,frame,,yes
 single parity bit,enables,error checks,yes,yes
 even parity scheme,provides,error checks,yes,yes
-even parity scheme,provides,bit value,,yes
 even parity scheme,provides,field,yes,yes
 forward error correction,provides,error detection and correction,yes,yes
 forward error correction,provides,error detection,no,yes
@@ -4016,8 +3936,6 @@ forward error correction,supports,error checks,,yes
 forward error correction,supports,packet transmission,no,yes
 tcp,requires,data bytes,yes,yes
 forward error correction,supports,receiver detection,,yes
-udp,contains,header,yes,yes
-udp,contains,bytes,no,yes
 tcp,requires,window number,yes,yes
 udp,contains,data,,yes
 ip,requires,header bits,yes,yes
@@ -4131,7 +4049,6 @@ ethernet,provides,address,yes,yes
 mac address,identifies,device,yes,yes
 mac address,identifies,host,yes,yes
 mac address,identifies,station,yes,yes
-ospf,supports,ethernet protocol,yes,yes
 mac address,identifies,gateway,,yes
 mac address,identifies,device address,yes,yes
 ethernet,supports,broadcast frame,yes,yes
@@ -4178,9 +4095,7 @@ adapter,part_of,a host,yes,yes
 adapter,implements,mac address,yes,no
 adapter,part_of,the host,yes,yes
 adapter,implements,multiple ip addresses,no,yes
-adapter,part_of,one host,yes,yes
 adapter,part_of,each host,yes,yes
-adapter,connects_to,network layer,,yes
 adapter,connects_to,destination address,,yes
 adapter,has_part,source address,yes,no
 adapter,sends,in the frame,yes,no
@@ -4270,7 +4185,6 @@ ethernet,provides,data transfer,yes,yes
 ethernet,has_part,packet,,yes
 ethernet,provides,frame checks,,yes
 ethernet,supports,data transfer,yes,yes
-ethernet,supports,network device,yes,no
 tcp,requires,buffer calculation,yes,yes
 switch,forwards,data packet,yes,yes
 switch,connects_to,ethernet link,yes,yes
@@ -4310,13 +4224,11 @@ switch,implements,frame forward,yes,yes
 switch,implements,packet forward,yes,yes
 switch,supports,output interface,no,yes
 switch,receives,ip packet,no,yes
-mac address,identifies,interface,yes,yes
 switch table,contains,entry,yes,yes
 switch,supports,frame forward,yes,yes
 switch table,contains,host address,yes,yes
 switch table,part_of,the switch,yes,yes
 switch table,contains,destination address,yes,yes
-switch table,contains,port number,yes,yes
 switch table,part_of,the network,yes,yes
 output buffer,part_of,interface,yes,yes
 switch table,part_of,node,yes,yes
@@ -4353,7 +4265,6 @@ ethernet,supports,transport protocol,yes,yes
 ethernet,supports,network layer,yes,yes
 ethernet,provides,layer header,yes,yes
 forwarding table,contains,prefix table,no,yes
-ethernet,supports,layer header,yes,yes
 mpls,enables,forward packet,yes,yes
 mpls,enables,multiple traffic routing,yes,yes
 mpls,enables,network congestion controller,no,yes
@@ -4417,7 +4328,6 @@ switch,receives,ethernet packet,yes,yes
 switch,connects_to,gateway,yes,yes
 switch,supports,destination address,yes,yes
 ethernet frame,contains,message,yes,yes
-switch,supports,gateway address,yes,no
 gateway router,sends,ip address to the device,yes,no
 gateway router,forwards,frame,yes,no
 gateway router,sends,the frame to the host,yes,yes
@@ -4453,7 +4363,6 @@ forwarding table,contains,route prefix,yes,yes
 router,forwards,ip data,yes,yes
 router,receives,destination ip address,no,yes
 router,provides,forward route,no,yes
-router,receives,source ip address,no,yes
 router,receives,gateway mac address,,yes
 router,receives,destination mac address,,yes
 tcp segment,contains,http message,yes,yes
@@ -4467,14 +4376,12 @@ link layer,provides,data link,yes,yes
 multiple access protocol,supports,wireless communication,yes,yes
 multiple access protocol,supports,data transmission,yes,yes
 multiple access protocol,supports,broadcast service,yes,yes
-mpls,enables,data transfer,yes,yes
 mpls,implements,multiple protocol,yes,no
 multiple access protocol,supports,channel access,,yes
 mpls,enables,network communication,yes,yes
 mpls,provides,traffic switching,yes,yes
 cyclic redundancy check,requires,bit checks,yes,no
 link layer,has_part,header,yes,yes
-link layer,has_part,interface,no,yes
 cyclic redundancy check,supports,data transmission,yes,yes
 crc,requires,data bits,yes,yes
 link layer,provides,link protocol,no,yes
@@ -4485,7 +4392,6 @@ ethernet frame,has_part,ip destination,,yes
 forwarding table,part_of,host b,yes,yes
 frame,contains,data bits,yes,yes
 adapter,sends,transmit frame.,yes,no
-frame,has_part,bit,yes,yes
 multiple access protocol,supports,packet transmission,yes,yes
 frame,has_part,transmit bit,yes,no
 multiple access protocol,supports,broadcast,yes,yes
@@ -4525,7 +4431,6 @@ bluetooth,provides,wireless communication,yes,yes
 bluetooth,provides,data transmission,yes,yes
 wifi,supports,data broadcast,yes,yes
 bluetooth,provides,network access,yes,yes
-wifi,supports,802 wireless,no,yes
 bluetooth,provides,wireless networks,yes,yes
 wifi,supports,wireless,no,yes
 bluetooth,enables,networking protocol,no,yes
@@ -4607,7 +4512,6 @@ mobile host,connects_to,gateway,yes,yes
 base station,sends,mobile host,yes,no
 mobile host,connects_to,home network,yes,yes
 wireless host,communicates_with,wireless network,yes,yes
-base station,receives,network broadcast,no,yes
 wireless host,communicates_with,mobile device,,yes
 wireless host,communicates_with,home network,yes,yes
 mobile host,connects_to,network,yes,yes
@@ -4744,7 +4648,6 @@ ap,sends,frame to device,yes,no
 wireless device,connects_to,gateway,yes,yes
 ap,sends,frame with address,yes,yes
 ap,sends,frame from ap,yes,no
-ap,sends,frame and host,yes,no
 wireless device,connects_to,access ap,yes,yes
 wireless device,sends,address of device,,yes
 ap,receives,frame,yes,yes
@@ -4774,7 +4677,6 @@ wireless device,connects_to,channel,yes,yes
 wireless device,receives,frame,yes,yes
 wireless device,connects_to,station,,yes
 wireless device,receives,transmission,yes,yes
-wireless device,sends,its frame,yes,yes
 wireless device,receives,broadcast,yes,yes
 wireless device,sends,a signal,yes,yes
 wireless device,sends,a broadcast,yes,yes
@@ -4783,7 +4685,6 @@ access point,connects_to,stations,yes,yes
 access point,connects_to,each station,yes,yes
 access point,connects_to,station,yes,yes
 ethernet,implements,broadcast transmission,yes,yes
-cdma,provides,bandwidth,no,yes
 cdma,requires,wireless transmission,yes,yes
 access point,receives,node,yes,yes
 access point,is_a,wireless station,yes,yes
@@ -4814,7 +4715,6 @@ wireless station,receives,mac address,,yes
 ap,provides,signal transmission,yes,yes
 ap,receives,the frames,yes,yes
 ap,receives,frames,yes,yes
-ap,provides,frame,yes,yes
 ap,sends,its mac address,yes,yes
 address 1,identifies,destination ap,,yes
 address 1,identifies,mac address wireless station,yes,no
@@ -4845,7 +4745,6 @@ address 2,identifies,destination address,yes,yes
 address 2,identifies,host,yes,no
 ap,provides,ip address,yes,no
 address 3,identifies,ap mac,yes,no
-address 3,identifies,gateway address,yes,no
 ap,receives,source address,,yes
 mobile ip,enables,network transport,no,yes
 ap,receives,destination address,,yes
@@ -4946,7 +4845,6 @@ mobile device,receives,control plane,no,yes
 mobile device,communicates_with,gateway,yes,yes
 mobile device,communicates_with,application server,yes,yes
 mobile device,connects_to,internet link,yes,yes
-mobile device,connects_to,remote device,yes,yes
 mobile device,receives,network data,yes,yes
 mobile device,connects_to,wireless interface,no,yes
 mobile device,receives,internet data,yes,yes
@@ -5185,8 +5083,6 @@ mobile device,provides,routing information,yes,yes
 mobile device,provides,device control,no,yes
 mobile device,sends,its address,yes,yes
 mobile device,causes,network path,,yes
-visited network,connects_to,gateway,,yes
-mobile device,causes,routing information,no,yes
 mobile device,communicates_with,remote network,yes,yes
 visited network,connects_to,wireless station,yes,yes
 visited network,connects_to,core network,yes,yes
@@ -5214,7 +5110,6 @@ hss,identifies,cellular device,yes,yes
 hss,identifies,visited network,yes,no
 hss,sends,data to visited network,yes,no
 home network,communicates_with,cellular network,yes,yes
-visited network,connects_to,carrier gateway,,yes
 nat gateway router,forwards,network destination,no,yes
 nat gateway router,provides,ip address,yes,yes
 nat gateway router,provides,network address,,yes
@@ -5251,7 +5146,6 @@ mobile device,communicates_with,visited gateway,yes,yes
 mobile device,connects_to,data channel,yes,yes
 mobile device,receives,network frame,yes,yes
 mobile device,provides,transport layer,no,yes
-mobile device,sends,data to the base station,yes,yes
 mobile device,sends,data to the home gateway,yes,yes
 mobile device,sends,data to the visited network,yes,yes
 lte,supports,data security,yes,yes
@@ -5297,7 +5191,6 @@ base station,operates_at,visited network,no,yes
 base station,receives,local gateway,yes,no
 base station,receives,home network,,yes
 source base station,communicates_with,gateway,,yes
-base station,sends,home gateway,no,yes
 source base station,forwards,data to device,yes,yes
 base station,sends,mobile at the base,yes,no
 source base station,forwards,data to mobile,yes,no
@@ -5341,7 +5234,6 @@ target base station,provides,gateway address,,yes
 target base station,receives,the source station,yes,yes
 target base station,supports,the device,,yes
 target base station,supports,its host,yes,no
-target base station,supports,a gateway,yes,no
 target base station,communicates_with,the gateway,yes,yes
 target base station,forwards,data to mobile device,yes,yes
 target base station,supports,source station,yes,yes
@@ -5522,7 +5414,6 @@ ipsec,contains,information,no,yes
 ipsec,provides,data transmission,yes,yes
 ipsec,provides,protocols,yes,no
 ipsec,supports,network layer,no,yes
-ipsec,supports,transport protocol,yes,yes
 ipsec,supports,data channel,yes,yes
 ipsec,supports,ip,yes,yes
 block cipher,implements,algorithm,yes,no
@@ -5535,7 +5426,6 @@ block cipher,requires,sequence of bit,no,yes
 des,requires,multiple bits,yes,no
 block cipher,requires,sequence of bits,yes,yes
 des,requires,bits,yes,yes
-des,requires,bit length,yes,yes
 des,requires,bits sequence,yes,yes
 des,requires,bits number,yes,yes
 aes,requires,bit length,yes,yes
@@ -5545,7 +5435,6 @@ public key cryptography,requires,information,no,yes
 public key cryptography,requires,computer software,yes,yes
 public key cryptography,requires,data management,yes,no
 digital signature,enables,message,no,yes
-digital signature,requires,message,yes,yes
 digital signature,enables,protocol,no,yes
 digital signature,requires,user,no,yes
 digital signature,requires,data,yes,yes
@@ -5705,7 +5594,6 @@ hmac,supports,header,no,yes
 hmac,provides,header checks,yes,yes
 hmac,supports,messages,yes,yes
 hmac,provides,server checks,yes,no
-hmac,supports,server checks,yes,no
 hmac,supports,protocol checks,yes,yes
 hmac,supports,message,no,yes
 hmac,supports,protocol,,yes
@@ -5737,7 +5625,6 @@ ipsec datagram,contains,protocol number,no,yes
 ipsec,contains,ip header,,yes
 ipsec,operates_at,data plane,no,yes
 ipsec,contains,application data,yes,yes
-ipsec,supports,header checks,yes,yes
 ipsec,contains,header,,yes
 gateway router,forwards,traffic,yes,yes
 gateway router,forwards,internet traffic,yes,yes
@@ -5810,7 +5697,6 @@ authentication server,sends,query,no,yes
 wpa2,requires,header,no,yes
 wpa2,requires,mac address,yes,no
 wpa2,requires,packet,,yes
-wpa2,requires,data,no,yes
 mobile device,receives,wireless signal,yes,yes
 access point,receives,the internet,,yes
 mobile device,sends,signal,yes,yes
@@ -5919,7 +5805,6 @@ application gateway,is_a,network service,yes,yes
 router,receives,application data,no,yes
 application gateway,is_a,network device,yes,yes
 application gateway,connects_to,remote host,,yes
-application gateway,connects_to,network gateway,yes,yes
 application gateway,connects_to,ip address,,yes
 application gateway,supports,ip protocol,yes,yes
 application gateway,supports,transport layer,,yes

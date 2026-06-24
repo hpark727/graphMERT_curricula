@@ -32,7 +32,7 @@ from torch.distributed.fsdp import (
 
 @dataclass
 class TrainingConfig:
-    model_name: str = field(default="google/gemma-3-27b-it")
+    model_name: str = field(default="Qwen/Qwen3-14B")
     block_size: int = field(default=32768)
     wandb_project: str = field(default="sft_kg")
     wandb_dir: str = field(default="/wandb_logs")
