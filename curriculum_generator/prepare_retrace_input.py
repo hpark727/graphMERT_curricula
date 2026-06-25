@@ -33,15 +33,27 @@ def parse_question_and_answer(qae: str):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--input',  required=True)
-    parser.add_argument('--output', required=True)
+    parser.add_argument('--input',    required=True)
+    parser.add_argument('--output',   required=True)
+    parser.add_argument('--verdicts', default=None,
+                        help='Optional verdicts JSON; if provided, only keep entries with verdict==Yes')
     args = parser.parse_args()
 
     with open(args.input) as f:
         data = json.load(f)
 
+    passed_ids = None
+    if args.verdicts:
+        with open(args.verdicts) as f:
+            verdicts = json.load(f)
+        passed_ids = {int(k) for k, v in verdicts.items() if v == 'Yes'}
+        print(f'Verdicts loaded: {len(passed_ids)} passing ids')
+
     out, skipped = [], 0
     for e in data:
+        if passed_ids is not None and e['id'] not in passed_ids:
+            skipped += 1
+            continue
         question, answer = parse_question_and_answer(e['question_and_explanation'])
         if not question or not answer:
             skipped += 1
