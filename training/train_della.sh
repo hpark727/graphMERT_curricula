@@ -14,7 +14,7 @@
 
 # ---- user config --------------------------------------------------------
 REPO_DIR="/scratch/gpfs/JHA/hp9084/curricula_gen"
-DATASET_PATH="/scratch/gpfs/JHA/hp9084/curricula_gen/output/tokenized_curriculum_dataset_final"
+DATASET_PATH="/scratch/gpfs/JHA/hp9084/curricula_gen/curriculum_generator/data/tokenized_curriculum_dataset_final"
 CHECKPOINT_DIR="/scratch/gpfs/JHA/hp9084/sft_training/checkpoints"
 HF_CACHE="/scratch/gpfs/JHA/hp9084/curricula_gen/.cache/huggingface"
 # -------------------------------------------------------------------------
