@@ -84,8 +84,8 @@ def train():
     # setting up trainer
     tokenizer = transformers.AutoTokenizer.from_pretrained(config.model_name, use_fast=True)
 
-    instruction_template = "<start_of_turn>user\n"
-    response_template = "<start_of_turn>model\n"
+    instruction_template = "<|im_start|>user\n"
+    response_template = "<|im_start|>assistant\n"
     tokenizer.pad_token = tokenizer.eos_token
     # Only compute loss over assistant responses
     collator = trl.DataCollatorForCompletionOnlyLM(

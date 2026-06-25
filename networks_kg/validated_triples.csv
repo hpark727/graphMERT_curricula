@@ -28,7 +28,6 @@ router,sends,the route to destination,yes,no
 web server,is_a,http server,yes,yes
 access network,connects_to,core network,yes,yes
 web server,is_a,host,yes,yes
-access network,connects_to,gateway,yes,yes
 access network,connects_to,end device,yes,yes
 dsl modem,connects_to,access gateway,yes,yes
 access network,connects_to,home network,yes,yes
@@ -39,7 +38,6 @@ dsl modem,connects_to,lan,yes,yes
 dsl modem,connects_to,network,yes,yes
 dsl modem,connects_to,link,yes,yes
 dsl,supports,internet access,yes,yes
-dsl modem,connects_to,gateway,yes,yes
 dsl modem,connects_to,cable,yes,yes
 dsl,supports,data network,yes,yes
 dsl,supports,home network,yes,yes
@@ -1081,7 +1079,6 @@ isp,provides,local server,no,yes
 isp,provides,data address,yes,no
 dhcp,provides,address,yes,yes
 local dns server,forwards,the query,yes,yes
-local dns server,communicates_with,mail server,,yes
 dhcp,provides,information,yes,yes
 local dns server,forwards,root server,,yes
 local dns server,forwards,information,no,yes
@@ -1726,7 +1723,6 @@ udp,provides,header field,no,yes
 udp,provides,data segment,,yes
 http,operates_at,application,yes,yes
 ftp,requires,port number,yes,yes
-udp,requires,port number field,yes,yes
 udp,supports,header fields,no,yes
 udp,supports,port number,yes,yes
 http,runs_on,transport,yes,yes
@@ -2260,7 +2256,6 @@ router,enables,minimum cost,,yes
 router,has_part,output rate,yes,no
 router,receives,packets from link,yes,yes
 router,receives,packet at link,yes,yes
-router,receives,packet from route,yes,no
 router,receives,packet through link,,yes
 congestion,causes,queue delay,yes,yes
 congestion,causes,transmission loss,yes,yes
@@ -2290,7 +2285,6 @@ tcp,sends,a segment from the connection,yes,yes
 tcp,supports,timer checks,yes,yes
 tcp,provides,loss detection,yes,yes
 slow start,increases,transmission rate,yes,yes
-slow start,increases,window,yes,yes
 tcp,sends,segment to receiver,yes,no
 slow start,increases,speed,yes,yes
 congestion avoidance,increases,window size,yes,yes
@@ -2718,7 +2712,6 @@ input port,part_of,link interface,,yes
 input port,supports,the link layer,,yes
 input port,supports,the switch interface,yes,no
 input port,supports,the packet forward,yes,no
-forwarding table,part_of,input port,yes,no
 forwarding table,contains,address entry,yes,yes
 forwarding table,contains,routing entry,yes,yes
 switching fabric,connects_to,routing controller,,yes
@@ -2821,7 +2814,6 @@ routing processor,requires,path cost,,yes
 output port,receives,packets,yes,yes
 forwarding table,contains,port number,yes,yes
 output port,sends,source packet,,yes
-output port,sends,the packet,yes,yes
 router,implements,packet switching,yes,yes
 router,receives,routing table entry,,yes
 router,receives,ip packet,yes,yes
@@ -3126,13 +3118,10 @@ traffic class,part_of,header,yes,yes
 ipv6,provides,traffic control,yes,no
 ipv6 datagram,contains,header field,yes,yes
 ipv6 datagram,contains,protocol field,,yes
-traffic class,part_of,the header,yes,yes
-payload length,part_of,the header,yes,yes
 payload length,part_of,ip header,yes,no
 traffic class,part_of,ip header,yes,yes
 payload length,part_of,packet,yes,yes
 next header,part_of,packet header,yes,yes
-next header,part_of,protocol layer,no,yes
 next header,identifies,protocol,yes,yes
 next header,identifies,the protocol,yes,yes
 ipv6,enables,packet route,yes,yes
@@ -3203,7 +3192,6 @@ router,requires,packet forward,,yes
 router,requires,link layer,yes,yes
 input port,supports,network traffic,,yes
 input port,requires,forward table,yes,yes
-forwarding table,contains,routing value,,yes
 output port,connects_to,cross link,yes,yes
 output port,receives,data,no,yes
 dhcp,enables,data packet,,yes
@@ -3321,7 +3309,6 @@ neighbor,receives,cost,yes,yes
 neighbor,receives,distance,yes,yes
 sdn,implements,data switching,yes,yes
 sdn,implements,routing protocols,yes,no
-neighbor,receives,routing cost,,yes
 graph,has_part,node x,yes,yes
 graph,has_part,path,,yes
 centralized routing algorithm,runs_on,host,,yes
@@ -3372,12 +3359,10 @@ forwarding table,part_of,algorithm,no,yes
 distance vector,contains,distance,yes,yes
 distance vector,contains,its distance,yes,yes
 distance vector,contains,node,,yes
-ls algorithm,provides,node distance,yes,yes
 forwarding table,contains,cost value,yes,yes
 rip,implements,routing algorithm,yes,yes
 distance vector,contains,distance numbers,yes,yes
 distance vector,contains,node y,yes,yes
-distance vector,contains,node cost,,yes
 distance vector,contains,path length,,yes
 distance vector,contains,distance value,yes,yes
 distance vector,contains,distance vector of node z,,yes
@@ -3402,7 +3387,6 @@ router,causes,routing cost,no,yes
 router,causes,routing,no,yes
 router,implements,routing algorithm,yes,yes
 router,sends,the route to a gateway,yes,no
-router,implements,forward packets,yes,yes
 router,implements,multiple paths,yes,no
 router,implements,routing tables,yes,no
 router,implements,route tables,,yes
@@ -5106,7 +5090,6 @@ mobile device,sends,data to destination,yes,no
 mobile device,provides,gateway,no,yes
 mobile device,sends,mac address,,yes
 mobile device,sends,source address,no,yes
-indirect routing,causes,packet route,,yes
 indirect routing,causes,routing path,no,yes
 visited network gateway router,forwards,network destination,no,yes
 visited network gateway router,forwards,ip information,yes,yes
@@ -5284,7 +5267,6 @@ mobile ip,supports,cellular service,yes,yes
 home agent,forwards,mobile device,,yes
 home agent,forwards,visited network,no,yes
 home agent,forwards,wireless data,,yes
-indirect routing,causes,visited networks,yes,yes
 foreign agent,provides,address,yes,yes
 foreign agent,provides,service,yes,yes
 home agent,forwards,mobile data,yes,yes
